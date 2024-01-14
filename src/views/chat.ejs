@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Broadcast</title>
+
+    <!-- Custom fonts for this template -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+    <link href="css/chatbox.css" rel="stylesheet">
+
+
+    <!-- Custom styles for this page -->
+    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
+
+    <link rel="stylesheet" href="css/additionalsidebar.css">
+</head>
+
+<body id="page-top">
+
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <%- include("partials/sidebar") %>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content" style="background: linear-gradient(to right, white 0.1%, rgba(180,144,202,0.5))">
+
+                <!-- Topbar -->
+                <%- include("partials/topbar") %>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid" ">
+
+                    <!-- Page Heading -->
+
+                    
+                    <div class="row justify-content-start h-100">
+                        <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
+                            <div class="card-header">
+                                <div class="input-group">
+                                    <input type="text" placeholder="Search..." name="" class="form-control search">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-body contacts_body">
+                                <ul class="contacts" id="contacts">
+
+                                </ul>
+                            </div>
+                            <div class="card-footer"></div>
+                        </div></div>
+                        <div class="col-md-8 col-xl-9 chat">
+                            <div class="card">
+                                <div class="card-header msg_head">
+                                    <div class="d-flex bd-highlight">
+                                        <div class="img_cont">
+                                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info">
+                                            <span>khalid Charif</span>
+                                            <p>1767 Messages</p>
+                                        </div>
+                                        <div class="video_cam">
+                                            <span><i class="fas fa-video"></i></span>
+                                            <span><i class="fas fa-phone"></i></span>
+                                        </div>
+                                    </div>
+                                    <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                                    <div class="action_menu">
+                                        <ul>
+                                            <li><i class="fas fa-user-circle"></i> View profile</li>
+                                            <li><i class="fas fa-users"></i> Add to close friends</li>
+                                            <li><i class="fas fa-plus"></i> Add to group</li>
+                                            <li><i class="fas fa-ban"></i> Block</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="card-body msg_card_body">
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="img_cont_msg">
+                                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                        </div>
+                                        <div class="msg_cotainer">
+                                            Hi, how are you samim?
+                                            <span class="msg_time">8:40 AM, Today</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end mb-4">
+                                        <div class="msg_cotainer_send">
+                                            Hi Khalid i am good tnx how about you?
+                                            <span class="msg_time_send">8:55 AM, Today</span>
+                                        </div>
+                                        <div class="img_cont_msg">
+                                    <img src="https://avatars.hsoubcdn.com/ed57f9e6329993084a436b89498b6088?s=256" class="rounded-circle user_img_msg">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="img_cont_msg">
+                                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                        </div>
+                                        <div class="msg_cotainer">
+                                            I am good too, thank you for your chat template<br>
+                                            I am good too, thank you for your chat template<br>
+                                            I am good too, thank you for your chat template<br>
+                                            I am good too, thank you for your chat template<br>
+                                            I am good too, thank you for your chat template<br>
+                                            <span class="msg_time">9:00 AM, Today</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end mb-4">
+                                        <div class="msg_cotainer_send">
+                                            You are welcome
+                                            <span class="msg_time_send">9:05 AM, Today</span>
+                                        </div>
+                                        <div class="img_cont_msg">
+                                    <img src="https://avatars.hsoubcdn.com/ed57f9e6329993084a436b89498b6088?s=256" class="rounded-circle user_img_msg">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="img_cont_msg">
+                                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                        </div>
+                                        <div class="msg_cotainer">
+                                            I am looking for your next templates
+                                            <span class="msg_time">9:07 AM, Today</span>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-end mb-4">
+                                        <div class="msg_cotainer_send">
+                                            Ok, thank you have a good day
+                                            <span class="msg_time_send">9:10 AM, Today</span>
+                                        </div>
+                                        <div class="img_cont_msg">
+                                <img src="https://avatars.hsoubcdn.com/ed57f9e6329993084a436b89498b6088?s=256" class="rounded-circle user_img_msg">
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-start mb-4">
+                                        <div class="img_cont_msg">
+                                            <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
+                                        </div>
+                                        <div class="msg_cotainer">
+                                            Bye, see you
+                                            <span class="msg_time">9:12 AM, Today</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer">
+                                    <div class="input-group">
+                                        <div class="input-group-append">
+                                            <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+                                        </div>
+                                        <textarea name="" class="form-control type_msg" placeholder="Type your message..."></textarea>
+                                        <div class="input-group-append">
+                                            <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <%- include("partials/footer") %>
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <%- include("partials/scrolltotop") %>
+
+    <!-- Include Modal-->
+    <%- include("partials/modal") %>
+
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
+    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Socket io-->
+    <script src="https://cdn.socket.io/4.7.3/socket.io.min.js" integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg" crossorigin="anonymous"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="js/sb-admin-2.min.js"></script>
+
+    <!-- Page level plugins -->
+    <script src="vendor/chart.js/Chart.min.js"></script>
+
+
+    <!--additional custom sidebar-->
+    <script src="js/additionalsidebar.js"></script>
+
+    <!--sweetalert-->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        const socket = io();
+
+        socket.on('message', function(msg) {
+            $('.logs').prepend($('<li>').text(msg));
+        });
+
+        socket.on('qr', function(src) {
+            $('#qrcode').attr('src', src);
+            $('#qrcode').show();
+        });
+
+        socket.on('ready', function(data) {
+            $('#qrcode').hide();
+        });
+
+        socket.on('authenticated', function(data) {
+            $('#qrcode').hide();
+        });
+    </script>
+
+    <script src="js/pages/chatPageScript.js"></script>
+
+
+</body>
+
+</html>
