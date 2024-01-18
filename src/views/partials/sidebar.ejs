@@ -35,25 +35,10 @@
   </li>
 
   <li class="nav-item">
-    <a class="nav-link text-primary" href="#">
+    <a class="nav-link text-primary" href="schedule">
         <i class="fas fa-solid fa-calendar-day"></i>
         <span>Schedule</span>
     </a>
-</li>
-
-  <!--Menu Monitoring-->
-  <li class="nav-item"id="navitemarchive">
-      <a class="nav-link text-primary" href="#" data-toggle="collapse" data-target="#whatsappcollapse" aria-expanded="true" aria-controls="collapseUtilities">
-          <i class="fas fa-archive"></i>
-          <span>Archive</span>
-      </a>
-      <div id="whatsappcollapse" class="collapse" aria-labelledby="headingUtilities"
-          data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-              <h6 class="collapse-header">Archive</h6>
-              <a class="collapse-item" href="mybroadcast.php">My Broadcast</a>
-          </div>
-      </div>
   </li>
 
 
@@ -66,20 +51,13 @@
   </div>
 
   <!--- Menu Reference-->
-  <li class="nav-item">
-      <a class="nav-link text-primary" href="activebroadcast">
-          <i class="fa fa-business-time"></i>
-          <span>Active Broadcast</span>
-      </a>
-  </li>
-
 
   <!--auth-->
   <li class="nav-item" id="navitemauth">
     <a class="nav-link text-primary" href="#" data-toggle="collapse" data-target="#collapseUtilities"
         aria-expanded="true" aria-controls="collapseUtilities" role="button">
             <i class="fas fa-solid fa-qrcode"></i>
-        <span>Auth</span>
+        <span>Authentication</span>
     </a>
         <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
         data-parent="#accordionSidebar">
@@ -87,15 +65,24 @@
             <h6 class="collapse-header">Manage:</h6>
             <a class="collapse-item" href="qr">QR</a>
         </div>
-    </div>
+        </div>
     </li>
 
-    <li class="nav-item">
-        <a class="nav-link text-primary" href="reference">
-            <i class="fa fa-database"></i>
+    <li class="nav-item" id="navitemreference">
+        <a class="nav-link text-primary" href="#" data-toggle="collapse" data-target="#collapseReference"
+            aria-expanded="true" aria-controls="collapseUtilities" role="button">
+                <i class="fas fa-solid fa-database"></i>
             <span>Reference</span>
         </a>
-    </li>
+            <div id="collapseReference" class="collapse" aria-labelledby="headingUtilities"
+            data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <h6 class="collapse-header">Manage:</h6>
+                <a class="collapse-item" href="calendar">Calendar</a>
+                <a class="collapse-item" href="variable">Variable</a>
+            </div>
+        </div>
+        </li>
     
 
 
@@ -114,6 +101,13 @@
   <div class="sidebar-heading text-dark">
       Other
   </div>
+
+	<li class="nav-item">
+    <a class="nav-link text-primary" href="#">
+        <i class="fas fa-solid fa-newspaper"></i>
+        <span>Panduan</span>
+    </a>
+  </li>
 
 
   <!-- Menu Leaderboard -->

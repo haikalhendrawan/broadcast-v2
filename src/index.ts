@@ -12,6 +12,8 @@ import client from "./config/client.ts";
 import homeRoute from "./routes/homeRoute.ts";
 import chatRoute from "./routes/chatRoute.ts";
 import qrRoute from "./routes/qrRoute.ts";
+import scheduleRoute from "./routes/scheduleRoute.ts";
+import referenceRoute from "./routes/referenceRoute.ts";
 
 import { connectEvent } from "./event/io/connectionEvent.ts";
 
@@ -26,6 +28,8 @@ app.use(express.json());
 app.use(homeRoute);
 app.use(chatRoute);
 app.use(qrRoute);
+app.use(scheduleRoute);
+app.use(referenceRoute);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
