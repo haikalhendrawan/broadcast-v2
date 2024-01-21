@@ -23,33 +23,34 @@
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-2">
                       <h3>
-                      <span><a class="h5" href="variable"><i class="fas fa-arrow-left mr-2"></i></a></span>
-                      <span>New Variable</span>
+                      <span><a class="h5" href="/variable"><i class="fas fa-arrow-left mr-2"></i></a></span>
+                      <span id="variableTitle"></span>
                       </h3>
                     </div>
                 
                     <!-- Tabel Active Broadcast -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
-                          <table class="table table-hover" style="width:50%;">
-                            <tbody class="text-gray-900" id="rbroadcast-table-body">
-                              <% for( let index = 0; index < 31; index++ ) { %>
-                                <tr>
-                                  <td>
-                                    <%= index+1 %>
-                                  </td>
-                                  <td>
-                                    :
-                                  </td>
-                                  <td>
-                                    <div>
-                                      <input type='text' class="form-control" >
-                                    </div>
-                                  </td>
-                                </tr>
-                                <% } %>
+                          <table class="table table-hover" style="width:50%;" id="variableDetailTable">
+                            <tbody class="text-gray-900" id="variableDetailTable-body">
+
+                              <div style="margin:auto; width:20%; ">
+                                <select 
+                                  class="form-control mb-3" 
+                                  aria-label=".form-select-lg example" 
+                                  style="color:black" 
+                                  onchange="handleSelect(value)"
+                                  id="selectMonth"
+                                  >
+                                  <option value="0">January</option>
+                                  <option value="1">February</option>
+                                  <option value="2">March</option>
+                                </select>
+                              </div>
+                              
+
                             </tbody>
-                            <button class="btn btn-primary float-right">Update</button>
+
                           </table>
                          
                         </div>
@@ -74,33 +75,32 @@
     <!-- Scroll to Top Button-->
     <%- include("partials/scrolltotop") %>
 
-    <!-- Include Modal-->
-    <%- include("partials/modal") %>
+
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Socket io-->
     <script src="https://cdn.socket.io/4.7.3/socket.io.min.js" integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg" crossorigin="anonymous"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
     <!--additional custom sidebar-->
-    <script src="js/additionalsidebar.js"></script>
+    <script src="/js/additionalsidebar.js"></script>
 
     <!--sweetalert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-   
+    <script src="/js/pages/viewVariablePageScript.js"></script>
+
 
 </body>
 

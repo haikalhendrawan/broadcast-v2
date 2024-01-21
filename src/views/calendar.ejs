@@ -30,6 +30,16 @@
                         <div class="card-body">
                           <table class="table table-hover" style="width:50%;">
                             <tbody class="text-gray-900" id="rbroadcast-table-body">
+
+                              <div style="margin:auto; width:20%; ">
+                                <select class="form-control mb-3" aria-label=".form-select-lg example" style="color:black">
+                                  <option selected>January</option>
+                                  <option value="1">January</option>
+                                  <option value="2">February</option>
+                                  <option value="3">March</option>
+                                </select>
+                              </div>
+                              
                               <% for( let index = 0; index < 31; index++ ) { %>
                                 <tr>
                                   <td>
@@ -39,14 +49,16 @@
                                     :
                                   </td>
                                   <td>
-                                    <div>
-                                      <input type='text' class="form-control" >
+                                    <div class="text-secondary">
+                                      
+                                      <button type="button" class="btn btn-success" style="width:80%">Active</button>
+                                      Senin
+                                      
                                     </div>
                                   </td>
                                 </tr>
                                 <% } %>
                             </tbody>
-                            <button class="btn btn-primary float-right">Update</button>
                           </table>
                          
                         </div>

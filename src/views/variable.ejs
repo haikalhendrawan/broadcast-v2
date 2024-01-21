@@ -23,33 +23,24 @@
                 <div class="container-fluid">
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 ">Variables</h1>
-                        <button class="btn btn-primary float-right" onclick="window.location.href='new-variable'">Add <i class='fas fa-plus'></i> </button>
+                        <button class="btn btn-primary float-right" data-toggle="modal" data-target="#addVariableModal">Add <i class='fas fa-plus'></i> </button>
                     </div>
                 
                     <!-- Tabel Active Broadcast -->
                     <div class="card shadow mb-4">
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-hover" id="rbroadcastTable" width="100%" cellspacing="0">
+                                <table class="table table-hover" id="variablesTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                        <th>No</th>
-                                        <th>Variable Name</th>
-                                        <th>Today's Value</th>
-                                        <th>Tomorrow's Value</th>
-                                        <th>Action</th>
+                                            <th>No</th>
+                                            <th>Variable Name</th>
+                                            <th>Today's Value</th>
+                                            <th>Tomorrow's Value</th>
+                                            <th>Action</th>
                                         </tr>
-                                    <tbody class="text-gray-900" id="rbroadcast-table-body">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Morning Call</td>
-                                            <td>SKKI</td>
-                                            <td>Umum</td>
-                                            <td>
-                                                <span> <a class='button btn-sm btn-success' href="view-variable"><i class='fas fa-eye'></i></a></span>
-                                                <span> <a class='button btn-sm btn-danger'><i class='fas fa-trash'></i></a></span>
-                                            </td>
-                                        </tr>
+                                    <tbody id="variablesTable-body">
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -76,8 +67,9 @@
     <%- include("partials/scrolltotop") %>
 
     <!-- Include Modal-->
-    <%- include("partials/modal") %>
-
+    <%- include("partials/addVariableModal") %>
+   
+    
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
     <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
@@ -100,6 +92,9 @@
 
     <!--sweetalert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+     <!--additional custom sidebar-->
+     <script src="js/pages/variablePageScript.js"></script>
 
    
 
