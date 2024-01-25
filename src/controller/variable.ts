@@ -71,7 +71,7 @@ const editVariable = async(req:Request, res:Response) => {
     const q = "UPDATE variable_junction SET`" + date + "`= ? WHERE id = ?";
     await pool.execute(q, [value, junctionId]);
 
-    return res.status(200).json({message:'delete data success'})
+    return res.status(200).json({message:'edit data success'})
   }catch(err){
     console.log(err);
     return res.status(500).json({message:'fail getting data ', isError:true})

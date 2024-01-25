@@ -15,6 +15,7 @@ import qrRoute from "./routes/qrRoute.ts";
 import scheduleRoute from "./routes/scheduleRoute.ts";
 import referenceRoute from "./routes/referenceRoute.ts";
 import variableRoute from "./routes/variableRoute.ts";
+import calendarRoute from "./routes/calendarRoute.ts";
 
 import { connectEvent } from "./event/io/connectionEvent.ts";
 
@@ -32,6 +33,7 @@ app.use(qrRoute);
 app.use(scheduleRoute);
 app.use(referenceRoute);
 app.use(variableRoute);
+app.use(calendarRoute);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
