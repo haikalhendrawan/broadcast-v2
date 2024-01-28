@@ -18,14 +18,19 @@ $(document).ready(function() {
     });
 
     var currentPage = window.location.href;
-    var navitem1 = document.getElementById("navitemcreatebroadcast");
-    var navitem2 = document.getElementById("navitemarchive");
-    if(currentPage.includes("createwhatsappsingle.php") || currentPage.includes("createwhatsapprecurring.php")){
-        navitem1.classList.add('active');
+    var collapseAuth = document.getElementById("collapseAuth");
+    var collapseReference = document.getElementById("collapseReference");
+    var collapseItemQR = document.getElementById("collapseItemQR");
+    var collapseItemCalendar = document.getElementById("collapseItemCalendar");
+
+    if(currentPage.includes("qr")){
+        collapseAuth.classList.add('show');
+        collapseItemQR.style.backgroundColor = 'rgba(66, 135, 245, 0.3)'
     };
 
-    if(currentPage.includes("mybroadcast.php")){
-        navitem2.classList.add('active');
+    if(currentPage.includes("calendar")){
+        collapseReference.classList.add('show');
+        collapseItemCalendar.style.backgroundColor = 'rgba(66, 135, 245, 0.3)'
     };
 
 

@@ -1,6 +1,6 @@
 import pool from "../config/db.ts";
 import { Request, Response } from "express";
-import { ResultSetHeader } from "mysql2";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 
 const addVariable = async(req:Request, res:Response) => {
@@ -91,6 +91,24 @@ const getAllVariable = async(req:Request, res:Response) => {
 };
 
 
+async function getTodayVariable(variableDate:string, variableMonth:number, variableYear:number  ){
+  try{
+    const q = `SELECT variable_junction.${pool.escapeId(variableDate)}, variable.variable_name FROM variable_junction
+              LEFT JOIN variable ON variable_junction.variable = variable.id 
+              WHERE month = ? AND year = ?`;
+    const [rows] = await pool.execute(q, [variableMonth, variableYear]);
+    const result = rows as RowDataPacket;
+    const data:any = {};
+    await result.forEach((item:any) => {
+      data[item.variable_name]=item[variableDate]
+    });
+    return data;
+  }catch(err){
+    console.log(err);
+  }
+}
 
 
-export {addVariable, getVariable, deleteVariable, editVariable, getAllVariable}
+
+
+export {addVariable, getVariable, deleteVariable, editVariable, getAllVariable, getTodayVariable}

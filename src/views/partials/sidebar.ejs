@@ -61,44 +61,35 @@
 
   <!--auth-->
   <li class="nav-item" id="navitemauth">
-    <a class="nav-link text-primary" href="#" data-toggle="collapse" data-target="#collapseUtilities"
-        aria-expanded="true" aria-controls="collapseUtilities" role="button">
-            <i class="fas fa-solid fa-qrcode"></i>
+    <a class="nav-link text-primary" href="#" data-toggle="collapse" data-target="#collapseAuth"
+        aria-expanded="true" aria-controls="collapseUtilities" role="button" id="navLinkAuth">
+        <i class="fas fa-solid fa-qrcode"></i>
         <span>Authentication</span>
     </a>
-        <div id="collapseUtilities" class="collapse" aria-labelledby="headingUtilities"
+        <div id="collapseAuth" class="collapse" aria-labelledby="headingUtilities"
         data-parent="#accordionSidebar">
-        <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Manage:</h6>
-            <a class="collapse-item" href="/qr">QR</a>
-        </div>
+            <div class="bg-white py-2 collapse-inner rounded" >
+                <h6 class="collapse-header">Manage:</h6>
+                <a class="collapse-item" href="/qr" id="collapseItemQR">QR</a>
+            </div>
         </div>
     </li>
 
     <li class="nav-item" id="navitemreference">
         <a class="nav-link text-primary" href="#" data-toggle="collapse" data-target="#collapseReference"
-            aria-expanded="true" aria-controls="collapseUtilities" role="button">
+            aria-expanded="true" aria-controls="collapseUtilities" role="button" id="navLinkReference">
                 <i class="fas fa-solid fa-database"></i>
             <span>Reference</span>
         </a>
-            <div id="collapseReference" class="collapse" aria-labelledby="headingUtilities"
-            data-parent="#accordionSidebar">
+        <div id="collapseReference" class="collapse" aria-labelledby="headingUtilities"
+        data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <h6 class="collapse-header">Manage:</h6>
-                <a class="collapse-item" href="/calendar">Calendar</a>
+                <a class="collapse-item" href="/calendar" id="collapseItemCalendar">Calendar</a>
             </div>
         </div>
         </li>
     
-
-
-  <!--Menu Fitur
-  <li class="nav-item">
-      <a class="nav-link" href="fitur.php">
-          <i class="fas fa-comment-alt"></i>
-          <span>Rekap Fitur</span>
-      </a>   
-  </li>-->
 
   <!-- Divider -->
   <hr class="sidebar-divider">
@@ -115,13 +106,6 @@
     </a>
   </li>
 
-
-  <!-- Menu Leaderboard -->
-  <!--<li class="nav-item">
-      <a class="nav-link" href="charts.html">
-      <i class="fas fa-chart-bar"></i>
-      <span>Leaderboard</span></a>
-  </li>-->
 
   <!-- Divider -->
   <hr class="sidebar-divider d-none d-md-block">

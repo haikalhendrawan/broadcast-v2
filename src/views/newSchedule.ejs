@@ -11,8 +11,10 @@
 
     <title>New Schedule</title>
 
+    <link rel="icon" type="image/png" href="ambo.png"/>
+
     <!-- Custom fonts for this template -->
-    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
     <link
         href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
         rel="stylesheet">
@@ -20,15 +22,15 @@
     <!-- Custom styles for this template -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-sb-admin-2/4.1.4/css/sb-admin-2.min.css" integrity="sha512-Mk4n0eeNdGiUHlWvZRybiowkcu+Fo2t4XwsJyyDghASMeFGH6yUXcdDI3CKq12an5J8fq4EFzRVRdbjerO3RmQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <!-- Custom styles for this page -->
-    <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <link href="/vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
 
     <!--Summernote-->
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
-    <link href="summernote/summernoteemoji/tam-emoji/css/emoji.css" rel="stylesheet">
+    <link href="/vendor/summernote/summernoteemoji/tam-emoji/css/emoji.css" rel="stylesheet">
 
     <!--Datepicker-->
-    <link rel="stylesheet" type="text/css" href="datepicker/dist/css/bootstrap-datepicker.min.css">
-    <link rel="stylesheet" href="css/additionalsidebar.css">
+    <link rel="stylesheet" type="text/css" href="/vendor/datepicker/dist/css/bootstrap-datepicker.min.css">
+    <link rel="stylesheet" href="/css/additionalsidebar.css">
 
 </head>
 
@@ -64,38 +66,33 @@
                 <!-- Form-->
                     <div class="card shadow mb-4">
                     <div class="card-body">
-                        <form method="POST" action="createwhatsapprecurring.php" id="broadcastform2" onsubmit="convertToCronExpression()">
+                        <!-- Judul Pesan-->
+                        <div class="form-group">
+                            <label for="judulpesan" class="font-weight-bold">Judul Pesan</label>
+                                <input class="form-control col-sm-5" name="judulpesan" id="judulpesan" placeholder="Input Title Here">
+                            <small class="form-text text-muted ml-1">Contoh: Pesan pengingat absen pagi</small>
+                        </div>
 
                         <!-- Tujuan Broadcast-->
-                            <div class="form-group">
-                                <label for="exampleFormControlSelect1" class="font-weight-bold">Tujuan</label>
-                                <select class="form-control col-sm-3" id="number2" name="number2">
-                                    <optgroup label="Group">
-                                    
-                                    </optgroup>
-                                    <optgroup label="Individual">
-                                    
-                                    </optgroup>
-                                </select>
-                            </div>
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1" class="font-weight-bold">Tujuan</label>
+                            <select class="form-control col-sm-3" id="number" name="number">
+                                <optgroup label="Group">
+                                    <option value="213231">One</option>
+                                </optgroup>
+                                <optgroup label="Individual">
+                                    <option value="678678">Two</option>
+                                </optgroup>
+                            </select>
+                        </div>
 
                         <!--Isi Broadcast-->
-                            <div class="form-group">
-                                <label for="summernote2" class="font-weight-bold">Isi Pesan</label>
-                                <textarea id="summernote2" name="message2" ></textarea>
-                            </div>
+                        <div class="form-group">
+                            <label for="summernote" class="font-weight-bold">Isi Pesan</label>
+                            <textarea id="summernote" name="message"></textarea>
+                        </div>
 
-                        <!--Recurring Option
-                            <div class="form-group mt-3">
-                                <p class="font-weight-bold"> Recurring Message?</p>
-                                <div class="form-check mt-n2 ml-2">
-                                    <input class="form-check-input" type="checkbox" value="" id="checkbox1">
-                                    <label class="form-check-label" for="checkbox1">
-                                        Ya
-                                    </label>
-                                </div>
-                            </div>-->
-
+                       
                         <!-- Recurring Schedule-->
                         <div class="form-group">
                             <label for="recurringschedule"class="font-weight-bold">Recurring Schedule</label>
@@ -111,19 +108,19 @@
                         </div>
 
                         <!--Recurring Date-->
-                        <div class="form-group mt-3" id="ifYes" style="display: none;">
+                        <div class="form-group mt-3" id="date-input" style="display:none;">
                             <label for="recurringdate" class=" font-weight-bold">Date</label>
                             <div class="input-group ">
                                 <input type="date" class="form-control col-sm-2" id="recurringdate" name="recurringdate" aria-describedby="timehelp" placeholder="Tanggal">
                             </div>
-                            <small class="form-text text-muted ml-1">Pesan akan di broadcast pada tanggal tersebut</small>
+                            <small class="form-text text-muted ml-1">Pesan akan di kirim pada tanggal tersebut</small>
                         </div>
 
                         <!--Recurring Time-->
                         <div class="form-group mt-3">
                             <label for="recurringtime" class=" font-weight-bold">Time</label>
                             <input type="time" class="form-control col-sm-2" id="recurringtime" name="recurringtime" aria-describedby="timehelp" placeholder="Jam/Menit">
-                            <small class="form-text text-muted ml-1">Pesan akan di broadcast setiap jam tersebut</small>
+                            <small class="form-text text-muted ml-1">Pesan akan di kirim setiap jam tersebut</small>
                         </div>
 
                         <!--Cron expression (hidden input)-->
@@ -131,20 +128,11 @@
                             <input type="hidden" name="cronexpression" value="" id="cronexpression">
                         </div>
 
-                        <!-- Judul Pesan-->
-                        <div class="form-group">
-                        <label for="judulpesan" class="font-weight-bold">Judul Pesan</label>
-                            <input class="form-control col-sm-5" name="judulpesan" id="judulpesan" placeholder="Input Title Here">
-                        <small class="form-text text-muted ml-1">Contoh: Pesan pengingat absen pagi</small>
-                        </div>
-
                         <!--Submit & Clear-->
                         <div class="form-group mt-5 text-center">
-                            <button type="submitrbroadcast" name="submitrbroadcast" class="btn btn-primary mt-5">Submit Broadcast</button>
-                            <!-- <button type="button" class="btn btn-primary mt-5" data-toggle="modal" data-target="#Modal1">Submit Broadcast</button> -->
-                            <a href="createwhatsapprecurring.php" class="btn btn-outline-secondary mt-5">Reset</a>
+                            <button name="submitrbroadcast" class="btn btn-primary mt-5" onclick="addSchedule()">Submit Broadcast</button>
+                            <button class="btn btn-outline-secondary mt-5" onclick="reset()">Reset</button>
                         </div>
-                        </form>
 
                     </div>
                     <!-- card body -->
@@ -171,48 +159,34 @@
     <!-- Scroll to Top Button-->
     <%- include("partials/scrolltotop") %>
 
-    <!-- Include Modal-->
-    <%- include("partials/modal") %>
-
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Socket io-->
     <script src="https://cdn.socket.io/4.7.3/socket.io.min.js" integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg" crossorigin="anonymous"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
 
     <!--additional custom sidebar-->
-    <script src="js/additionalsidebar.js"></script>
+    <script src="/js/additionalsidebar.js"></script>
 
     <!--sweetalert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--Summernote Script-->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-    <script>
-      $(document).ready(function () {
-      document.emojiButton ='fas fa-smile';
-      document.emojiSource ='summernote/summernoteemoji/tam-emoji/img';
-      $('#summernote2').summernote({
-        placeholder: 'To insert emoji press (Win + .)',
-      tabsize: 3,
-      height: 500,
-      toolbar: [
-      ['font', ['bold', 'italic', 'strikethrough']],
-      ]
-      })
-      });
-    </script>
+
+    <!-- page level script-->
+    <script src="/js/pages/newSchedulePageScript.js"></script>
 
   </body>
 

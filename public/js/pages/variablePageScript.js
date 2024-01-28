@@ -32,7 +32,7 @@ async function renderContent(){
       <td>${variableData[currentDate]}</td>
       <td>${variableData[tomorrowDate]}</td>
       <td>
-        <span> <a class='button btn-sm btn-success' href='view-variable/${variableId}'><i class='fas fa-eye'></i></a></span>
+        <span> <a class='button btn-sm btn-success' href='variable/view-variable/${variableId}'><i class='fas fa-eye'></i></a></span>
         <span> <a class='button btn-sm btn-danger' onClick='deleteVariable(${item.id})'><i class='fas fa-trash'></i></a></span>
       </td>
       ` 
@@ -45,7 +45,7 @@ async function deleteVariable(id){
   await fetch(`http://localhost:3000/deleteVariable/${id}`);
   document.getElementById(`row${id}`).remove();
 
-}
+};
 
 let isCallingAPI = false;
 

@@ -8,16 +8,19 @@ async function getVariableById(id, month, year){
 const currentURL = window.location.href;
 const currentMonth = new Date().getMonth();
 const currentYear = 0;
-const variableId = currentURL.substring(36);
+const splitURL = currentURL.split('/');
+const variableId = splitURL[splitURL.length-1];
 let chooseMonth = localStorage.getItem('month') || currentMonth;
 
 async function renderContent(month){
   const data = await getVariableById(variableId, month, currentYear);
+  const currentDate = new Date().getDate();
   document.getElementById('variableTitle').innerText=data.variable_name;
 
   for(let i=0;i<31;i++){
     const row = document.createElement('tr');
     row.setAttribute('id', data[i]);
+    if(i+1===currentDate){row.setAttribute('style', 'background-color:rgba(214, 13, 36, 0.3);')}
     row.innerHTML = `
     <td>
       ${i+1} 

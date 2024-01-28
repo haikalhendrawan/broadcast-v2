@@ -31,7 +31,7 @@
                         <div class="card-body">
                         <!-- <div><button onclick="restartCronJobs()" class="btn btn-primary mb-3 float-right">Update</button></div> -->
                             <div class="table-responsive">
-                                <table class="table table-hover" id="rbroadcastTable" width="100%" cellspacing="0">
+                                <table class="table table-hover" id="scheduleTable" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                         <th>No</th>
@@ -42,19 +42,8 @@
                                         <th>Status</th>
                                         <th>Action</th>
                                         </tr>
-                                    <tbody id="rbroadcast-table-body">
-                                        <tr>
-                                            <td>1</td>
-                                            <td>Judul Broadcast</td>
-                                            <td>".$row['isirbroadcast']."</td>
-                                            <td>".$row2['groupName']."</td>
-                                            <td class='cron-expression'>".$row['cron_expression']."</td>
-                                            <td><p class='text-success'>Active</p></td>
-                                            <td>
-                                                <span> <a class='button btn-sm btn-success' >Activate</a></span>
-                                                <span> <a class='button btn-sm btn-danger'><i class='fas fa-trash'></i></a></span>
-                                            </td>
-                                        </tr>
+                                    <tbody id="scheduleTable-body">
+                                        
                                     </tbody>
                                 </table>
                             </div>
@@ -80,31 +69,32 @@
     <!-- Scroll to Top Button-->
     <%- include("partials/scrolltotop") %>
 
-    <!-- Include Modal-->
-    <%- include("partials/modal") %>
 
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.7.1.slim.min.js" integrity="sha256-kmHvs0B+OpCW5GVHUNjv9rOmY0IvSIRcf7zGUDTDQM8=" crossorigin="anonymous"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 
     <!-- Socket io-->
     <script src="https://cdn.socket.io/4.7.3/socket.io.min.js" integrity="sha384-+miq58Ltmjm+SSP5g8Ok6dpMO/6R4n8xe/x1Yj0Bdb9kiEz25LTnWv/GZQTRQamg" crossorigin="anonymous"></script>
 
     <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
 
     <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
+    <script src="/js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
 
     <!--additional custom sidebar-->
-    <script src="js/additionalsidebar.js"></script>
+    <script src="/js/additionalsidebar.js"></script>
 
     <!--sweetalert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!--Page Level Script-->
+    <script src="/js/pages/schedulePageScript.js"></script>
 
    
 

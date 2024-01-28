@@ -1,6 +1,6 @@
 import pool from "../config/db.ts";
 import { Request, Response } from "express";
-import { ResultSetHeader } from "mysql2";
+import { ResultSetHeader, RowDataPacket } from "mysql2";
 
 const getCalendar = async(req:Request, res:Response) => {
   try{
@@ -32,4 +32,16 @@ const editCalendar = async(req:Request, res:Response) => {
   }
 };
 
-export {editCalendar, getCalendar};
+const getTodayValidation = async(date:string, month:number, year:number) => {
+  try{
+    const q = `SELECT ${pool.escapeId(date)} FROM calendar WHERE month = ? AND year = ?`;
+    const [rows] = await pool.execute(q, [month, year]);
+    const result = rows as RowDataPacket;
+    const todayValidation = result[0][date];
+    return todayValidation
+  }catch(err){
+    return err
+  }
+};
+
+export {editCalendar, getCalendar, getTodayValidation};
