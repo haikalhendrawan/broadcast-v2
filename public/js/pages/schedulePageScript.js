@@ -38,6 +38,16 @@ async function deleteSchedule(id){
   document.getElementById(`row${id}`).remove();
 };
 
+async function startJob(){
+  await fetch(`http://localhost:3000/startJobs`);
+  console.log('job started')
+};
+
+async function stopJob(){
+  await fetch(`http://localhost:3000/stopJobs`);
+  console.log('job stopped')
+};
+
 async function updateSchedule(id, status){
   try{
     const data = {

@@ -8,7 +8,6 @@ async function addSchedule(){
     const cron = document.getElementById("cronexpression").value;
     const status = 0;
 
-    console.log(time);
     const data = {
       title,
       message,

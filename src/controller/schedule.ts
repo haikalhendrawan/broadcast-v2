@@ -66,8 +66,19 @@ const getSchedule = async(req:Request, res:Response) => {
   }
 };
 
+const getActiveSchedule = async() => {
+  try{
+    const q = `SELECT * FROM schedule WHERE status = ?`;
+    const [rows] = await pool.execute(q, [1]);
+
+    return rows;
+  }catch(err){
+    console.log(err);
+  }
+};
 
 
-export {addSchedule, editSchedule, deleteSchedule, getSchedule}
+
+export {addSchedule, editSchedule, deleteSchedule, getSchedule, getActiveSchedule}
 
 // -----------------------------------------------------------------

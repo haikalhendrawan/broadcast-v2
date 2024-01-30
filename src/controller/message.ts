@@ -5,56 +5,43 @@ import { getTodayVariable } from "./variable.ts";
 import { getTodayValidation } from "./calendar.ts";
 import sanitizeHtml from 'sanitize-html';
 import emoji from "emoji-js";
+import { getActiveSchedule } from "./schedule.ts";
+import { RowDataPacket } from "mysql2";
 
-const sendMorningMessage = async() => {
+const kirimBroadcastPagi = async(msgBody:string) => {
   const today = new Date();
   const date = today.getDate();
   const dateString = date.toString();
   const day = today.getDay();
   const month = today.getMonth();
   const year = 0;
+  const tomorrowDate = new Date().getDate()+1;
+  const tomorrowDateString = tomorrowDate.toString();
 
-  const rows = await getTodayVariable(dateString, month, year);
+  const rows = await getTodayVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
   const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
+
   const morningCall = rows['Morning Call'];
   const seragam = rows['Seragam'];
 
+  const adjustedText = msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
+
   // if(!isWeekDay){
   //   return console.log('Today is Weekend, no message for today'); }
-  if(isActiveDay !== 1){
-    return console.log('Today is not an Active Day, no message for today'); }
-  if(!morningCall || morningCall.length<1 || morningCall==='null'){
-    return console.log('Invalid Morning Call Variable, no message for today'); }
-  if(!seragam || seragam.length<1 || seragam==='null'){
-    return console.log('Invalid Seragam Variable, no message for today'); }
+  // if(isActiveDay !== 1){
+  //   return console.log('Today is not an Active Day, no message for today'); }
+  // if(!morningCall || morningCall.length<1 || morningCall==='null'){
+  //   return console.log('Invalid Morning Call Variable, no message for today'); }
+  // if(!seragam || seragam.length<1 || seragam==='null'){
+  //   return console.log('Invalid Seragam Variable, no message for today'); }
   
-  console.log(
-    `Selamat Pagi Bapak Ibu jangan lupa untuk absen ya
-    Informasi untuk besok:
-    -UIC Morning Call = ${morningCall}
-    -Seragam = ${seragam}
-
-    Terimakasih selamat beristirahat bapak/ibu
-    `
-    )
-
+  console.log(adjustedText)
   
 };
 
-const DUMMY = [
-  {
-    cron:'* * * * *',
-    function: () => {sendMorningMessage()}
-  },
-  {
-    cron:'* * * * *',
-    function: () => {console.log("dummy msg 2")}
-  },
-]
 
-
-export {DUMMY}
+export {kirimBroadcastPagi}
 
 
 // -------------------------------------------------------------------------------------------
@@ -110,4 +97,9 @@ function escapeHTML(text:any) {
     '/': '&#x2F;'
   };
   return text.replace(/[<>&"'\/]/g, (match: keyof typeof replacements) => replacements[match]);
+};
+
+function replaceVariable(text:string, stringToReplace:string, varThatReplace:any){
+  const textToReturn = text.replace(stringToReplace, varThatReplace);
+  return textToReturn
 };

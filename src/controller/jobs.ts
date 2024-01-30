@@ -1,17 +1,26 @@
 import client from "../config/client.ts";
 import { Request, Response } from "express";
+import { RowDataPacket } from "mysql2";
 import {CronJob} from "cron";
-import { getTodayVariable } from "./variable.ts";
-import { getTodayValidation } from "./calendar.ts";
-import { DUMMY } from "./message.ts";
+import { kirimBroadcastPagi } from "./message.ts";
+import { getActiveSchedule } from "./schedule.ts";
 
-const allJobs:CronJob[] = [];
+let allJobs:CronJob[] = [];
 
-const compileJobs = () => {
-  DUMMY.map((item) => {
-    const job = new CronJob(item.cron, item.function);
+const compileJobs = async() => {
+  const result = await getActiveSchedule();
+  const activeSchedule = result as RowDataPacket;
+
+  activeSchedule.map((item:any) => {
+    const job = new CronJob(item.cron, () => {
+      kirimBroadcastPagi(item.message);
+    });
     allJobs.push(job)
   });
+};
+
+const removeJobs = async() => {
+  allJobs = []
 };
 
 const startJobs = async(req:Request, res:Response) => {
@@ -30,4 +39,4 @@ const stopJobs = async(req:Request, res:Response) => {
 
 compileJobs();
 
-export{allJobs, compileJobs, startJobs, stopJobs}
+export{allJobs, compileJobs, removeJobs, startJobs, stopJobs}
