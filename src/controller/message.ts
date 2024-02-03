@@ -1,14 +1,14 @@
 import client from "../config/client.ts";
 import { Request, Response } from "express";
 import {CronJob} from "cron";
-import { getTodayVariable } from "./variable.ts";
+import { getDailyVariable } from "./variable.ts";
 import { getTodayValidation } from "./calendar.ts";
 import sanitizeHtml from 'sanitize-html';
 import emoji from "emoji-js";
 import { getActiveSchedule } from "./schedule.ts";
 import { RowDataPacket } from "mysql2";
 
-const kirimBroadcastPagi = async(msgBody:string) => {
+const sendMorningSchedule = async(msgBody:string) => {
   const today = new Date();
   const date = today.getDate();
   const dateString = date.toString();
@@ -18,7 +18,7 @@ const kirimBroadcastPagi = async(msgBody:string) => {
   const tomorrowDate = new Date().getDate()+1;
   const tomorrowDateString = tomorrowDate.toString();
 
-  const rows = await getTodayVariable(tomorrowDateString, month, year);
+  const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
   const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
 
@@ -36,12 +36,76 @@ const kirimBroadcastPagi = async(msgBody:string) => {
   // if(!seragam || seragam.length<1 || seragam==='null'){
   //   return console.log('Invalid Seragam Variable, no message for today'); }
   
-  console.log(adjustedText)
+  console.log(adjustedText + "morning Schedule")
+
+};
+
+const sendEveningSchedule = async(msgBody:string) => {
+  const today = new Date();
+  const date = today.getDate();
+  const dateString = date.toString();
+  const day = today.getDay();
+  const month = today.getMonth();
+  const year = 0;
+  const tomorrowDate = new Date().getDate()+1;
+  const tomorrowDateString = tomorrowDate.toString();
+
+  const rows = await getDailyVariable(tomorrowDateString, month, year);
+  const isWeekDay = unintendedMsgValidation(day); // true or false
+  const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
+
+  const morningCall = rows['Morning Call'];
+  const seragam = rows['Seragam'];
+
+  const adjustedText = msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
+
+  // if(!isWeekDay){
+  //   return console.log('Today is Weekend, no message for today'); }
+  // if(isActiveDay !== 1){
+  //   return console.log('Today is not an Active Day, no message for today'); }
+  // if(!morningCall || morningCall.length<1 || morningCall==='null'){
+  //   return console.log('Invalid Morning Call Variable, no message for today'); }
+  // if(!seragam || seragam.length<1 || seragam==='null'){
+  //   return console.log('Invalid Seragam Variable, no message for today'); }
   
+  console.log(adjustedText+ "evening Schedule")
+
+};
+
+const sendSchedule = async(msgBody:string) => {
+  const today = new Date();
+  const date = today.getDate();
+  const dateString = date.toString();
+  const day = today.getDay();
+  const month = today.getMonth();
+  const year = 0;
+  const tomorrowDate = new Date().getDate()+1;
+  const tomorrowDateString = tomorrowDate.toString();
+
+  const rows = await getDailyVariable(tomorrowDateString, month, year);
+  const isWeekDay = unintendedMsgValidation(day); // true or false
+  const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
+
+  const morningCall = rows['Morning Call'];
+  const seragam = rows['Seragam'];
+
+  const adjustedText = msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
+
+  // if(!isWeekDay){
+  //   return console.log('Today is Weekend, no message for today'); }
+  // if(isActiveDay !== 1){
+  //   return console.log('Today is not an Active Day, no message for today'); }
+  // if(!morningCall || morningCall.length<1 || morningCall==='null'){
+  //   return console.log('Invalid Morning Call Variable, no message for today'); }
+  // if(!seragam || seragam.length<1 || seragam==='null'){
+  //   return console.log('Invalid Seragam Variable, no message for today'); }
+  
+  console.log(adjustedText+ "normal Schedule")
+
 };
 
 
-export {kirimBroadcastPagi}
+export {sendMorningSchedule, sendEveningSchedule, sendSchedule}
 
 
 // -------------------------------------------------------------------------------------------

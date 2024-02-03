@@ -14,8 +14,11 @@ async function renderContent(){
     const statusClass = item.status===1?'text-success':'text-danger';
     const statusText = item.status===1?'Active':'Inactive';
     const actionButton = item.status===1?'btn-danger':'btn-success';
-    const actionButtonText = item.status===1?'Deactivate':'Activate';
+    const actionButtonText = item.status===1?'Stop':'Start';
     const statusToUpdate = item.status===1?0:1;
+    const deleteButton = item.title==='Pesan Pagi' || item.title==='Pesan Sore'
+                          ?null
+                          :`<span> <a class='button btn-sm btn-danger' style='cursor:pointer' onclick='deleteSchedule(${item.id})'><i class='fas fa-trash'></i></a></span>`;
 
     row.innerHTML =`
       <td>${index+1}</td>
@@ -26,7 +29,7 @@ async function renderContent(){
       <td><p class=${statusClass}>${statusText}</p></td>
       <td>
       <span> <a class='button btn-sm ${actionButton}' style='cursor:pointer' onclick='updateSchedule(${item.id}, ${statusToUpdate})'>${actionButtonText}</a></span>
-      <span> <a class='button btn-sm btn-danger' style='cursor:pointer' onclick='deleteSchedule(${item.id})'><i class='fas fa-trash'></i></a></span>
+      ${[deleteButton]}
       </td>
       ` 
     document.getElementById("scheduleTable-body").appendChild(row);

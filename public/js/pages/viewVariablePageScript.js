@@ -20,7 +20,7 @@ async function renderContent(month){
   for(let i=0;i<31;i++){
     const row = document.createElement('tr');
     row.setAttribute('id', data[i]);
-    if(i+1===currentDate){row.setAttribute('style', 'background-color:rgba(214, 13, 36, 0.3);')}
+    if(i+1===currentDate && month==currentMonth){row.setAttribute('style', 'background-color:rgba(214, 13, 36, 0.3);')}
     row.innerHTML = `
     <td>
       ${i+1} 

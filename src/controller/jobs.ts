@@ -2,7 +2,7 @@ import client from "../config/client.ts";
 import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import {CronJob} from "cron";
-import { kirimBroadcastPagi } from "./message.ts";
+import { sendMorningSchedule, sendEveningSchedule, sendSchedule } from "./message.ts";
 import { getActiveSchedule } from "./schedule.ts";
 
 let allJobs:CronJob[] = [];
@@ -13,7 +13,9 @@ const compileJobs = async() => {
 
   activeSchedule.map((item:any) => {
     const job = new CronJob(item.cron, () => {
-      kirimBroadcastPagi(item.message);
+      if(item.title==='Pesan Pagi'){return sendMorningSchedule(item.message)}
+      if(item.title==='Pesan Sore'){return sendEveningSchedule(item.message)}
+      sendSchedule(item.message);
     });
     allJobs.push(job)
   });

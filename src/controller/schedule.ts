@@ -13,8 +13,6 @@ const addSchedule = async(req:Request, res:Response) => {
     const cron = req.body.cron;
     const status = req.body.status;
 
-    console.log(title, message, receiverNumber, receiverName, cron, status)
-
     const q = `INSERT INTO SCHEDULE(title, message, receiver_number, receiver_name, cron, status)
                VALUES(?, ?, ?, ?, ?, ?)`;
     const [result] = await pool.execute(q, [title, message, receiverNumber, receiverName, cron, status]);

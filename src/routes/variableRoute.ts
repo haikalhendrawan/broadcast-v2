@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import {addVariable, getVariable, deleteVariable, editVariable, getAllVariable,getTodayVariable} from "../controller/variable.ts";
+import {addVariable, getVariable, deleteVariable, editVariable, getAllVariable, getDailyVariable} from "../controller/variable.ts";
 
 
 const router = express.Router();

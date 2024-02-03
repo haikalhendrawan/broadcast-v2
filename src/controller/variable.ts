@@ -32,6 +32,7 @@ const addVariable = async(req:Request, res:Response) => {
   }
 };
 
+// fungsi mendapatkan variable value selama 30 hari
 const getVariable = async(req:Request, res:Response) => {
   try{
     const variableId = req.params.id;
@@ -78,6 +79,7 @@ const editVariable = async(req:Request, res:Response) => {
   }
 };
 
+// fungsi mendapatkan nama interface seluruh variable 
 const getAllVariable = async(req:Request, res:Response) => {
   try{
     const q = `SELECT * FROM variable`;
@@ -90,8 +92,8 @@ const getAllVariable = async(req:Request, res:Response) => {
   }
 };
 
-
-async function getTodayVariable(variableDate:string, variableMonth:number, variableYear:number  ){
+// fungsi mendapatkan 1 value variable di tanggal tertentu 
+async function getDailyVariable(variableDate:string, variableMonth:number, variableYear:number  ){
   try{
     const q = `SELECT variable_junction.${pool.escapeId(variableDate)}, variable.variable_name FROM variable_junction
               LEFT JOIN variable ON variable_junction.variable = variable.id 
@@ -111,4 +113,4 @@ async function getTodayVariable(variableDate:string, variableMonth:number, varia
 
 
 
-export {addVariable, getVariable, deleteVariable, editVariable, getAllVariable, getTodayVariable}
+export {addVariable, getVariable, deleteVariable, editVariable, getAllVariable, getDailyVariable}

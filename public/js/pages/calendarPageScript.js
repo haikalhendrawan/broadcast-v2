@@ -18,7 +18,7 @@ async function renderContent(month){
     const dayName = getDayName(new Date(`2024-0${month+1}-${i+1}`));
     const row = document.createElement('tr');
     row.setAttribute('id', data[i]);
-    if(i+1===currentDate){row.setAttribute('style', 'background-color:rgba(214, 13, 36, 0.3);')}
+    if(i+1===currentDate && month==currentMonth){row.setAttribute('style', 'background-color:rgba(214, 13, 36, 0.3);')}
     row.innerHTML = `
     <td>
        ${i+1}
