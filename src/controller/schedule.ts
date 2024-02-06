@@ -1,6 +1,9 @@
 import client from "../config/client.ts";
 import { Request, Response } from "express";
-import pool from "../config/db.ts";
+import { RowDataPacket } from "mysql2";
+import cronstrue from 'cronstrue';
+import 'cronstrue/locales/id.js';
+import pool from "../config/db.ts"
 
 
 // -----------------------------------------------------------------
@@ -56,8 +59,12 @@ const getSchedule = async(req:Request, res:Response) => {
   try{
     const q = `SELECT * FROM schedule`;
     const [rows] = await pool.execute(q);
-
-    return res.status(200).json(rows);
+    const adjRows = rows as RowDataPacket;
+    const adjRows2 = adjRows.map((item:any) => {
+        item.cron_expression = cronstrue.toString(item.cron, {locale: 'id'});
+      return item;
+    })
+    return res.status(200).json(adjRows2);
   }catch(err){
     console.log(err);
     return res.status(500).json({message:'fail getting data ', isError:true})

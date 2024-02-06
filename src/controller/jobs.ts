@@ -13,9 +13,9 @@ const compileJobs = async() => {
 
   activeSchedule.map((item:any) => {
     const job = new CronJob(item.cron, () => {
-      if(item.title==='Pesan Pagi'){return sendMorningSchedule(item.message)}
-      if(item.title==='Pesan Sore'){return sendEveningSchedule(item.message)}
-      sendSchedule(item.message);
+      if(item.title==='Pesan Pagi'){return sendMorningSchedule(item.receiver_number, item.message)}
+      if(item.title==='Pesan Sore'){return sendEveningSchedule(item.receiver_number, item.message)}
+      sendSchedule(item.receiver_number, item.message);
     });
     allJobs.push(job)
   });
@@ -26,9 +26,13 @@ const removeJobs = async() => {
 };
 
 const startJobs = async(req:Request, res:Response) => {
+  await removeJobs(); 
+  await compileJobs(); 
+  
   allJobs.map((item) => {
     item.start()
   });
+  console.log("Job has been started");
   res.json({message:'job has been started'})
 };
 
@@ -36,6 +40,7 @@ const stopJobs = async(req:Request, res:Response) => {
   allJobs.map((item) => {
     item.stop()
   });
+  console.log("job has been stoped");
   res.json({message:'job has been stoped'})
 };
 

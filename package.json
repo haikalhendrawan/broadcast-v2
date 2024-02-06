@@ -15,6 +15,7 @@
     "@types/emoji-js": "^3.5.2",
     "axios": "^1.6.2",
     "cron": "^3.1.6",
+    "cronstrue": "^2.48.0",
     "dotenv": "^16.3.1",
     "ejs": "^3.1.9",
     "emoji-js": "^3.8.0",

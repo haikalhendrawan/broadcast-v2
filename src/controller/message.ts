@@ -1,93 +1,70 @@
 import client from "../config/client.ts";
 import { Request, Response } from "express";
 import {CronJob} from "cron";
-import { getDailyVariable } from "./variable.ts";
-import { getTodayValidation } from "./calendar.ts";
 import sanitizeHtml from 'sanitize-html';
 import emoji from "emoji-js";
-import { getActiveSchedule } from "./schedule.ts";
 import { RowDataPacket } from "mysql2";
+import { getDailyVariable } from "./variable.ts";
+import { getTodayValidation } from "./calendar.ts";
+import { getActiveSchedule } from "./schedule.ts";
+import {today, date, dateString, tomorrowDate, tomorrowDateString, day, month, year} from "../model/time.js";
 
-const sendMorningSchedule = async(msgBody:string) => {
-  const today = new Date();
-  const date = today.getDate();
-  const dateString = date.toString();
-  const day = today.getDay();
-  const month = today.getMonth();
-  const year = 0;
-  const tomorrowDate = new Date().getDate()+1;
-  const tomorrowDateString = tomorrowDate.toString();
-
+const sendMorningSchedule = async(chatId:string, msgBody:string) => {
   const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
   const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
 
-  const morningCall = rows['Morning Call'];
-  const seragam = rows['Seragam'];
+  const adjustedText = await convertHtmlToWhatsApp(msgBody)
 
-  const adjustedText = msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
+  if(!isWeekDay){
+    return console.log('Today is Weekend, no message for today') }
+  if(isActiveDay !== 1){
+    return console.log('Today is not an Active Day, no message for today') }
 
-  // if(!isWeekDay){
-  //   return console.log('Today is Weekend, no message for today'); }
-  // if(isActiveDay !== 1){
-  //   return console.log('Today is not an Active Day, no message for today'); }
-  // if(!morningCall || morningCall.length<1 || morningCall==='null'){
-  //   return console.log('Invalid Morning Call Variable, no message for today'); }
-  // if(!seragam || seragam.length<1 || seragam==='null'){
-  //   return console.log('Invalid Seragam Variable, no message for today'); }
+  try{
+    console.log(adjustedText+ "morning schedule")
+    await client.sendMessage(chatId, adjustedText);
+  }catch(err){
+    console.log(err);
+  }
+};
+
+const sendEveningSchedule = async(chatId:string, msgBody:string) => {
+  const rows = await getDailyVariable(tomorrowDateString, month, year);
+  const isWeekDay = unintendedMsgValidation(day); // true or false
+  const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
+
+  const morningCall = rows['Morning Call'] || null;
+  const seragam = rows['Seragam'] || null ;
+
+  const adjustedText =  msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
+  const finalText = await convertHtmlToWhatsApp(adjustedText);
+
+  if(!isWeekDay){
+    return console.log('Today is Weekend, no message for today') }
+  if(isActiveDay !== 1){
+    return console.log('Today is not an Active Day, no message for today') }
+  if(!morningCall || morningCall.length<1 || morningCall==='null'){
+    return console.log('Invalid Morning Call Variable, no message for today') }
+  if(!seragam || seragam.length<1 || seragam==='null'){
+    return console.log('Invalid Seragam Variable, no message for today') }
   
-  console.log(adjustedText + "morning Schedule")
+  try{
+    console.log(finalText+ "evening schedule")
+    await client.sendMessage(chatId, adjustedText);
+  }catch(err){
+    console.log(err);
+  };
 
 };
 
-const sendEveningSchedule = async(msgBody:string) => {
-  const today = new Date();
-  const date = today.getDate();
-  const dateString = date.toString();
-  const day = today.getDay();
-  const month = today.getMonth();
-  const year = 0;
-  const tomorrowDate = new Date().getDate()+1;
-  const tomorrowDateString = tomorrowDate.toString();
-
+const sendSchedule = async(chatId:string, msgBody:string) => {
   const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
   const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
 
-  const morningCall = rows['Morning Call'];
-  const seragam = rows['Seragam'];
-
-  const adjustedText = msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
-
-  // if(!isWeekDay){
-  //   return console.log('Today is Weekend, no message for today'); }
-  // if(isActiveDay !== 1){
-  //   return console.log('Today is not an Active Day, no message for today'); }
-  // if(!morningCall || morningCall.length<1 || morningCall==='null'){
-  //   return console.log('Invalid Morning Call Variable, no message for today'); }
-  // if(!seragam || seragam.length<1 || seragam==='null'){
-  //   return console.log('Invalid Seragam Variable, no message for today'); }
-  
-  console.log(adjustedText+ "evening Schedule")
-
-};
-
-const sendSchedule = async(msgBody:string) => {
-  const today = new Date();
-  const date = today.getDate();
-  const dateString = date.toString();
-  const day = today.getDay();
-  const month = today.getMonth();
-  const year = 0;
-  const tomorrowDate = new Date().getDate()+1;
-  const tomorrowDateString = tomorrowDate.toString();
-
-  const rows = await getDailyVariable(tomorrowDateString, month, year);
-  const isWeekDay = unintendedMsgValidation(day); // true or false
-  const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
-
-  const morningCall = rows['Morning Call'];
-  const seragam = rows['Seragam'];
+  const morningCall = rows['Morning Call'] || null;
+  const seragam = rows['Seragam'] || null;
 
   const adjustedText = msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
 
@@ -115,18 +92,19 @@ function unintendedMsgValidation (day:number) {
   return isValid
 };
 
-function convertHtmlToWhatsApp(html:any) {
-  // Remove any unwanted tags or attributes from the HTML
+async function convertHtmlToWhatsApp(html:string) {
   const cleanHtml = sanitizeHtml(html, {
     allowedTags: ['b', 'strong', 'i', 'em', 'u', 's', 'strike', 'br', 'p'],
     allowedAttributes: {},
   });
 
-  const message = cleanHtml.replace(/<br\s*\/?>/gi, '\n');
-
-  const paragraphRegex = /<p\b[^>]*>(.*?)<\/p>/gi;
+  const paragraphRegex = /<p\b[^>]*>(.*?)<\/p>/gis;
   const paragraphReplace = '$1\n';
-  const paragraphMessage = message.replace(paragraphRegex, paragraphReplace);
+  const message = cleanHtml.replace(paragraphRegex, paragraphReplace);
+
+  const brRegex = /<br\s*\/?>/gi;
+  const brReplace = '\n';
+  const brMessage = message.replace(brRegex, brReplace);
 
   const emojiConverter = new emoji();
   const emojiRegex = /<img.*?data-emoji="([^\s"]+)".*?>/gi;
@@ -134,7 +112,7 @@ function convertHtmlToWhatsApp(html:any) {
     const emojiUnicode = emojiConverter.replace_colons(`:${p1}:`);
     return emojiUnicode ? escapeHTML(emojiUnicode) : '';
   };
-  const emojiMessage = paragraphMessage.replace(emojiRegex, emojiReplace);
+  const emojiMessage = brMessage.replace(emojiRegex, emojiReplace);
 
   const boldRegex = /<b\b[^>]*>(.*?)<\/b>/gi;
   const boldReplace = '*$1*';
@@ -149,7 +127,7 @@ function convertHtmlToWhatsApp(html:any) {
   const strikeMessage = italicMessage.replace(strikeRegex, strikeReplace);
 
   return strikeMessage;
-};
+}
 
 function escapeHTML(text:any) {
   const replacements = {

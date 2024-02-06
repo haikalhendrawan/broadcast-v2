@@ -1,3 +1,4 @@
+
 async function getSchedule(){
   const response = await fetch("http://localhost:3000/getSchedule");
   const schedules = await response.json();
@@ -15,6 +16,7 @@ async function renderContent(){
     const statusText = item.status===1?'Active':'Inactive';
     const actionButton = item.status===1?'btn-danger':'btn-success';
     const actionButtonText = item.status===1?'Stop':'Start';
+    const actionButtonIcon = item.status===1?'fas fa-stop':'fas fa-play';
     const statusToUpdate = item.status===1?0:1;
     const deleteButton = item.title==='Pesan Pagi' || item.title==='Pesan Sore'
                           ?null
@@ -25,10 +27,10 @@ async function renderContent(){
       <td>${item.title}</td>
       <td>${item.message}</td>
       <td>${item.receiver_name}</td>
-      <td class='cron-expression'>${item.cron}</td>
+      <td class='cron-expression'>${item.cron_expression}</td>
       <td><p class=${statusClass}>${statusText}</p></td>
       <td>
-      <span> <a class='button btn-sm ${actionButton}' style='cursor:pointer' onclick='updateSchedule(${item.id}, ${statusToUpdate})'>${actionButtonText}</a></span>
+      <span> <button class='button btn-sm ${actionButton}' style='cursor:pointer' onclick='updateSchedule(${item.id}, ${statusToUpdate})'>${actionButtonText} <i class='${actionButtonIcon}'></i></button></span>
       ${[deleteButton]}
       </td>
       ` 
@@ -64,6 +66,8 @@ async function updateSchedule(id, status){
       },
       body:JSON.stringify(data)
     });
+    await fetch('http://localhost:3000/stopJobs')
+    await fetch(`http://localhost:3000/startJobs`);
     location.reload();
   }catch(err){
     console.log(err)
