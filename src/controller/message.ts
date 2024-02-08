@@ -7,14 +7,23 @@ import { RowDataPacket } from "mysql2";
 import { getDailyVariable } from "./variable.ts";
 import { getTodayValidation } from "./calendar.ts";
 import { getActiveSchedule } from "./schedule.ts";
-import {today, date, dateString, tomorrowDate, tomorrowDateString, day, month, year} from "../model/time.js";
 
 const sendMorningSchedule = async(chatId:string, msgBody:string) => {
+  const today = new Date();
+  const date = today.getDate();
+  const dateString = date.toString();
+  const day = today.getDay();
+  const month = today.getMonth();
+  const year = 0;
+  const tomorrowDate = new Date().getDate()+1;
+  const tomorrowDateString = tomorrowDate.toString();
+
   const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
   const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
 
-  const adjustedText = await convertHtmlToWhatsApp(msgBody)
+
+  const waText = await convertHtmlToWhatsApp(msgBody);
 
   if(!isWeekDay){
     return console.log('Today is Weekend, no message for today') }
@@ -22,14 +31,23 @@ const sendMorningSchedule = async(chatId:string, msgBody:string) => {
     return console.log('Today is not an Active Day, no message for today') }
 
   try{
-    console.log(adjustedText+ "morning schedule")
-    await client.sendMessage(chatId, adjustedText);
+    console.log(waText+ "morning schedule")
+    await client.sendMessage(chatId, waText);
   }catch(err){
     console.log(err);
-  }
+  };
 };
 
 const sendEveningSchedule = async(chatId:string, msgBody:string) => {
+  const today = new Date();
+  const date = today.getDate();
+  const dateString = date.toString();
+  const day = today.getDay();
+  const month = today.getMonth();
+  const year = 0;
+  const tomorrowDate = new Date().getDate()+1;
+  const tomorrowDateString = tomorrowDate.toString();
+
   const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
   const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
@@ -37,8 +55,8 @@ const sendEveningSchedule = async(chatId:string, msgBody:string) => {
   const morningCall = rows['Morning Call'] || null;
   const seragam = rows['Seragam'] || null ;
 
-  const adjustedText =  msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
-  const finalText = await convertHtmlToWhatsApp(adjustedText);
+  const variabledText =  msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
+  const waText = await convertHtmlToWhatsApp(variabledText);
 
   if(!isWeekDay){
     return console.log('Today is Weekend, no message for today') }
@@ -50,8 +68,8 @@ const sendEveningSchedule = async(chatId:string, msgBody:string) => {
     return console.log('Invalid Seragam Variable, no message for today') }
   
   try{
-    console.log(finalText+ "evening schedule")
-    await client.sendMessage(chatId, adjustedText);
+    console.log(waText+ "evening schedule")
+    await client.sendMessage(chatId, waText);
   }catch(err){
     console.log(err);
   };
@@ -59,25 +77,33 @@ const sendEveningSchedule = async(chatId:string, msgBody:string) => {
 };
 
 const sendSchedule = async(chatId:string, msgBody:string) => {
+  const today = new Date();
+  const date = today.getDate();
+  const dateString = date.toString();
+  const day = today.getDay();
+  const month = today.getMonth();
+  const year = 0;
+  const tomorrowDate = new Date().getDate()+1;
+  const tomorrowDateString = tomorrowDate.toString();
+
   const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
   const isActiveDay = await getTodayValidation(dateString, month, year); // 1(true) or 0(false)
 
-  const morningCall = rows['Morning Call'] || null;
-  const seragam = rows['Seragam'] || null;
 
-  const adjustedText = msgBody.replace('${seragam}', seragam).replace('${morningCall}', morningCall);
+  const waText = await convertHtmlToWhatsApp(msgBody);
 
-  // if(!isWeekDay){
-  //   return console.log('Today is Weekend, no message for today'); }
-  // if(isActiveDay !== 1){
-  //   return console.log('Today is not an Active Day, no message for today'); }
-  // if(!morningCall || morningCall.length<1 || morningCall==='null'){
-  //   return console.log('Invalid Morning Call Variable, no message for today'); }
-  // if(!seragam || seragam.length<1 || seragam==='null'){
-  //   return console.log('Invalid Seragam Variable, no message for today'); }
-  
-  console.log(adjustedText+ "normal Schedule")
+  if(!isWeekDay){
+    return console.log('Today is Weekend, no message for today'); }
+  if(isActiveDay !== 1){
+    return console.log('Today is not an Active Day, no message for today'); }
+
+  try{
+    console.log(waText+ "morning schedule")
+    await client.sendMessage(chatId, waText);
+  }catch(err){
+    console.log(err);
+  }
 
 };
 
