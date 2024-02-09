@@ -1,7 +1,7 @@
 const currentURL = window.location.href;
 const currentMonth = new Date().getMonth();
 const currentYear = 0;
-let chooseMonth = localStorage.getItem('month') || currentMonth;
+let chooseMonth = parseInt(localStorage.getItem('month')) || currentMonth;
 
 async function getCalendar(month, year){
   const response = await fetch(`http://localhost:3000/getCalendar/${month}/${year}`);
@@ -13,9 +13,10 @@ async function getCalendar(month, year){
 async function renderContent(month){
   const data = await getCalendar(month, currentYear);
   const currentDate = new Date().getDate();
+  const monthChoose = ("0"+(month+1)).slice(-2);
 
   for(let i=0;i<31;i++){
-    const dayName = getDayName(new Date(`2024-0${month+1}-${i+1}`));
+    const dayName = getDayName(new Date(`2024-${monthChoose}-${i+1}`));
     const row = document.createElement('tr');
     row.setAttribute('id', data[i]);
     if(i+1===currentDate && month==currentMonth){row.setAttribute('style', 'background-color:rgba(214, 13, 36, 0.3);')}
@@ -67,10 +68,10 @@ async function handleClick(id, date, value){
   }catch(err){
     console.log(err);
   }
-}
+};
 
 function getDayName(date = new Date(), locale = 'id-ID') {
   return date.toLocaleDateString(locale, {weekday: 'long'});
-}
+};
 
 renderContent(chooseMonth);
