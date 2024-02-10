@@ -28,9 +28,9 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <link href="/vendor/summernote/summernoteemoji/tam-emoji/css/emoji.css" rel="stylesheet">
 
-    <!--Datepicker-->
-    <link rel="stylesheet" type="text/css" href="/vendor/datepicker/dist/css/bootstrap-datepicker.min.css">
     <link rel="stylesheet" href="/css/additionalsidebar.css">
+    <!-- Selectpicker -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/css/bootstrap-select.min.css">
 
 </head>
 
@@ -74,14 +74,14 @@
                         </div>
 
                         <!-- Tujuan Broadcast-->
-                        <div class="form-group">
-                            <label for="exampleFormControlSelect1" class="font-weight-bold">Tujuan</label>
-                            <select class="form-control col-sm-3" id="number" name="number">
-                                <optgroup label="Group">
-                                    <option value="213231">One</option>
+                        <div class="form-group" style="display: flex; flex-direction: column;">
+                            <label for="number" class="font-weight-bold">Tujuan</label>
+                            <select class="form-control col-sm-3 selectpicker" id="number" name="number">
+                                <optgroup label="Group" id="group-option">
+                                   
                                 </optgroup>
-                                <optgroup label="Individual">
-                                    <option value="678678">Two</option>
+                                <optgroup label="Individual" id="individual-option">
+                                    
                                 </optgroup>
                             </select>
                         </div>
@@ -184,6 +184,9 @@
 
     <!--Summernote Script-->
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+
+    <!-- Selectpicker -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.14/dist/js/bootstrap-select.min.js"></script>
 
     <!-- page level script-->
     <script src="/js/pages/newSchedulePageScript.js"></script>

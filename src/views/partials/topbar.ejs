@@ -9,7 +9,7 @@
     </form>
 
     <!-- Topbar Search -->
-    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="home.php">
+    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search" method="POST" action="">
         <div class="input-group">
             <input type="text" id="searchinput" name="searchinput" class="form-control bg-light border-0 small" placeholder="Search for..."
                 aria-label="Search">
@@ -28,7 +28,7 @@
         <li class="container flex-center" style="background: linear-gradient(to right, rgba(94,231,223,0.5), rgba(180,144,202,0.5))">
         <h5 class="mt-2 text-primary text-center font-weight-bold">
             <i class= "fas fa-calendar mr-2" ></i>
-            <span> 19 Jan 2024</span>
+            <span> <%= new Date().getDate() %></span>
         </h5>
         </li>
 

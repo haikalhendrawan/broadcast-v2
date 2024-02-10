@@ -35,6 +35,35 @@ function reset(){
   location.reload()
 }
 
+async function renderContent(){
+  const response = await fetch('http://localhost:3000/getChat');
+  const contact = await response.json();
+  const selectGroup = document.getElementById('group-option');
+  const selectIndividual = document.getElementById('individual-option');
+
+  console.log(response);
+  console.log(contact);
+
+  for(const item of contact){
+    const isGroup = item.contactSerial.slice(-4) ==='g.us';
+    const profilePicture = item.contactProfilePicture? item.contactProfilePicture : "/undraw_profile.svg"
+    const option = document.createElement('option');
+    option.value = item.contactSerial;
+    option.setAttribute('data-content', `<img class='email img-profile rounded-circle' src='${profilePicture}' style='height:20px;width:20px;'><span class='text-dark'>${item.contactName}</span>`);
+
+    if(isGroup){
+      selectGroup.appendChild(option);
+    }else{
+      selectIndividual.appendChild(option);
+    }
+  }
+
+  $('.selectpicker').selectpicker('refresh');
+
+};
+
+renderContent();
+
 
 
 
