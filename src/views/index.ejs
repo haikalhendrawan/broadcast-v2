@@ -33,17 +33,34 @@
                     <div class="row">
 
                         <!-- Broadcast Belum Selesai -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-danger  shadow h-100 py-2">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary  shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
-                                                Broadcast Belum Selesai</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                            <div class="text-xs font-weight-bold text-gray-800 text-uppercase mb-1">
+                                                Client Status
+                                            </div>
+                                            <div class="text-xs mb-0 mt-1 row">
+                                                <div class="col-md-4" style="gap: 0px; margin: 0px;">
+                                                    <p style=" margin: 0px;">Server</p>
+                                                    <p style=" margin: 0px;">Pushname</p>
+                                                    <p style=" margin: 0px;">Serial</p>
+                                                </div>
+                                                <div class="col-md-1" >
+                                                    <p style=" margin: 0px;">:</p>
+                                                    <p style=" margin: 0px;">:</p>
+                                                    <p style=" margin: 0px;">:</p>
+                                                </div>
+                                                <div class="col text-gray-800 ">
+                                                    <p class="text-success" style=" margin: 0px;">Up</p>
+                                                    <p style=" margin: 0px;"> Admin Kanwil DJPb Sumbar</p>
+                                                    <p style=" margin: 0px;">628997344449@c.us</p>
+                                                </div>
+                                            </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-thumbtack fa-2x text-gray-300"></i>
+                                            <i class="fas fa-user fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -51,14 +68,15 @@
                         </div>
 
                         <!-- Broadcast Selesai -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success  shadow h-100 py-2">
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary  shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Broadcast Selesai </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                                            <div class="text-xs font-weight-bold text-uppercase mb-1">
+                                                Unread Chat
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-bookmark fa-2x text-gray-300"></i>
@@ -69,12 +87,13 @@
                         </div>
 
                         <!-- Total Broadcast -->
-                        <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card border-left-primary  shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">Total Broadcast
+                                            <div class="text-xs font-weight-bold  text-uppercase mb-1">
+                                                Total Broadcast
                                             </div>
                                             <div class="row no-gutters align-items-center">
                                                 <div class="col-auto">
@@ -109,47 +128,6 @@
                             </div>
                             <input type="hidden" id="broadcastData" value="[]">
 
-                            <!--Pie Chart-->
-                            <div class="card shadow mb-4">
-                                <!-- Card Header - Dropdown -->
-                                <div
-                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold">Broadcast Chart</h6>
-                                    <div class="dropdown no-arrow">
-                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
-                                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                                        </a>
-                                        <!-- <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
-                                            aria-labelledby="dropdownMenuLink">
-                                            <div class="dropdown-header">Dropdown Header:</div>
-                                            <a class="dropdown-item" href="#">Action</a>
-                                            <a class="dropdown-item" href="#">Another action</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item" href="#">Something else here</a>
-                                        </div> -->
-                                    </div>
-                                </div>
-
-                                <!--hidden value-->
-                                <input type="hidden" id="count-broadcast" value="<?php countbroadcast()?>">
-                                <input type="hidden" id="count-broadcast-done" value="<?php countbroadcastdone() ?>">
-                                <input type="hidden" id="count-broadcast-not-done" value="<?php countbroadcastnotdone()?>">
-                                <!-- Card Body -->
-                                <div class="card-body">
-                                    <div class="chart-pie pt-4 pb-2">
-                                        <canvas id="broadcastchart"></canvas>
-                                    </div>
-                                    <div class="mt-4 text-center small">
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle text-danger"></i> Broadcast Belum Selesai
-                                        </span>
-                                        <span class="mr-2">
-                                            <i class="fas fa-circle" style="color:#1cc88a"></i> Broadcast Selesai
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
 
@@ -160,7 +138,7 @@
                                 <!-- Card Header - Dropdown -->
                                 <div
                                     class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                                    <h6 class="m-0 font-weight-bold ">Announcement</h6>
+                                    <h6 class="m-0 font-weight-bold ">Contact</h6>
                                     <div class="dropdown no-arrow">
                                         <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -170,15 +148,17 @@
                                 </div>
                                 <!-- Card Body -->
                                 <div class="card-body text-gray-800">
-                                    <p><b>Closed Testing Aplikasi Broadcast</b></p>
-                                    
+                                    <p><b>Group</b></p>
                                     <hr>
-                                
+
+                                    <div style="display:flex; flex-direction:column; margin-left: 10px; gap:5px; margin-bottom: 20px;" id="groupContactDisplay">
+                                       
+                                    </div>
+                                    <p><b>User</b></p>
                                     <hr>
-                                        <form class="form-group" action ="home.php" method ="POST">
-                                        <textarea class="form-control"  name="addanouncement"></textarea>
-                                        <button type="submit" class="btn btn-primary mt-2" name='submitaddanouncement'>Submit</button>
-                                        </form>
+                                    <div style="display:flex; flex-direction:column; margin-left: 10px; gap:5px; margin-bottom: 20px;" id="userContactDisplay">
+                                        
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -233,6 +213,9 @@
 
     <!--sweetalert-->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <!--main page level js-->
+    <script src="/js/pages/indexPageScript.js"></script>
 
 
 </body>

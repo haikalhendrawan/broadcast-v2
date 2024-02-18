@@ -76,14 +76,23 @@
                         <!-- Tujuan Broadcast-->
                         <div class="form-group" style="display: flex; flex-direction: column;">
                             <label for="number" class="font-weight-bold">Tujuan</label>
-                            <select class="form-control col-sm-3 selectpicker" id="number" name="number">
-                                <optgroup label="Group" id="group-option">
-                                   
-                                </optgroup>
-                                <optgroup label="Individual" id="individual-option">
-                                    
-                                </optgroup>
-                            </select>
+                            <div style="display: flex; flex-direction: row; gap:10px">
+                                <select class="form-control col-sm-3 selectpicker" id="number" name="number">
+                                    <optgroup label="Group" id="group-option">
+                                       
+                                    </optgroup>
+                                    <optgroup label="Individual" id="individual-option">
+                                        
+                                    </optgroup>
+                                </select>
+                                <div class="spinner-border text-primary" role="status" style="height:1.5rem; width:1.5rem; margin-top: 5px;" id="loadingSpinner">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <div style="margin-top: 5px;" id="loadingText">
+                                    Loading contact...
+                                </div>
+                            </div>
+
                         </div>
 
                         <!--Isi Broadcast-->

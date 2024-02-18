@@ -30,7 +30,7 @@ async function renderContent(){
       <td class='cron-expression'>${item.cron_expression}</td>
       <td><p class=${statusClass}>${statusText}</p></td>
       <td>
-      <span> <button class='button btn-sm ${actionButton}' style='cursor:pointer' onclick='updateSchedule(${item.id}, ${statusToUpdate})'>${actionButtonText} <i class='${actionButtonIcon}'></i></button></span>
+      <button class='button btn-sm ${actionButton}' style='cursor:pointer' onclick='updateSchedule(${item.id}, ${statusToUpdate})'>${actionButtonText} <i class='${actionButtonIcon}'></i></button>
       ${[deleteButton]}
       </td>
       ` 

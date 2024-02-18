@@ -16,6 +16,7 @@ import referenceRoute from "./routes/referenceRoute.ts";
 import variableRoute from "./routes/variableRoute.ts";
 import calendarRoute from "./routes/calendarRoute.ts";
 import jobsRoute from "./routes/jobsRoute.ts";
+import clientDataRoute from "./routes/clientDataRoute.ts";
 import { connectEvent } from "./event/io/connectionEvent.ts";
 
 // -----------------------------config--------------------
@@ -34,6 +35,7 @@ app.use(referenceRoute);
 app.use(variableRoute);
 app.use(calendarRoute);
 app.use(jobsRoute);
+app.use(clientDataRoute);
 
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');

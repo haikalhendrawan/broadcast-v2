@@ -28,7 +28,16 @@
         <li class="container flex-center" style="background: linear-gradient(to right, rgba(94,231,223,0.5), rgba(180,144,202,0.5))">
         <h5 class="mt-2 text-primary text-center font-weight-bold">
             <i class= "fas fa-calendar mr-2" ></i>
-            <span> <%= new Date().getDate() %></span>
+            <span> 
+                <% 
+                    var today = new Date();
+                    var date = today.getDate();
+                    var month = today.toLocaleDateString("id-ID", {month: "short"});
+                    var year = today.getFullYear();
+                    var output = `${date} ${month} ${year}`
+                %>
+                <%= output %>
+            </span>
         </h5>
         </li>
 

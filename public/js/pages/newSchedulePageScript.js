@@ -1,10 +1,15 @@
+const loadingSpinner = document.getElementById("loadingSpinner");
+const loadingText = document.getElementById("loadingText");
+
 async function addSchedule(){
   try{
     await convertToCronExpression();
     const title = document.getElementById("judulpesan").value;
     const message = document.getElementById("summernote").value;
     const receiverNumber = document.getElementById("number").value;
-    const receiverName = document.getElementById("number").value;
+    var selectedIndex = document.getElementById("number").selectedIndex;
+    const receiverName = document.getElementById("number")[selectedIndex].getAttribute('contactName');
+    console.log(receiverName);
     const cron = document.getElementById("cronexpression").value;
     const status = 0;
 
@@ -36,7 +41,9 @@ function reset(){
 }
 
 async function renderContent(){
-  const response = await fetch('http://localhost:3000/getChat');
+  loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px;");
+  loadingText.setAttribute("style", "margin-top: 5px;");
+  const response = await fetch('http://localhost:3000/getContact');
   const contact = await response.json();
   const selectGroup = document.getElementById('group-option');
   const selectIndividual = document.getElementById('individual-option');
@@ -45,20 +52,25 @@ async function renderContent(){
   console.log(contact);
 
   for(const item of contact){
-    const isGroup = item.contactSerial.slice(-4) ==='g.us';
-    const profilePicture = item.contactProfilePicture? item.contactProfilePicture : "/undraw_profile.svg"
+    const isGroup = item.id._serialized.slice(-4) ==='g.us'; // can be "g.us" or "c.us" or "lid.us"
+    const isUser = item.id._serialized.slice(-4) ==='c.us';
+    const profilePicture = item.profilePic? item.profilePic : "/undraw_profile.svg";
+    const contactName = item.name || null ;
     const option = document.createElement('option');
-    option.value = item.contactSerial;
-    option.setAttribute('data-content', `<img class='email img-profile rounded-circle' src='${profilePicture}' style='height:20px;width:20px;'><span class='text-dark'>${item.contactName}</span>`);
+    option.value = item.id._serialized;
+    option.setAttribute('data-content', `<img class='email img-profile rounded-circle' src='${profilePicture}' style='height:20px;width:20px;'><span class='text-dark'>${contactName}</span>`);
+    option.setAttribute('contactName', `${contactName}`);
 
-    if(isGroup){
+    if(isGroup && contactName){
       selectGroup.appendChild(option);
-    }else{
+    }else if(isUser && contactName){
       selectIndividual.appendChild(option);
     }
   }
 
   $('.selectpicker').selectpicker('refresh');
+  loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px; display:none");
+  loadingText.setAttribute("style", "margin-top: 5px; display:none");
 
 };
 
