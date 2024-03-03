@@ -82,8 +82,19 @@ const getActiveSchedule = async() => {
   }
 };
 
+const deactivateSchedule = async() => {
+  try{
+    const q = `UPDATE schedule SET status=? WHERE id>0`;
+    await pool.execute(q, [0]);
+
+    return console.log("schedule status has been set to 0");
+  }catch(err){
+    console.log(err);
+  }
+};
 
 
-export {addSchedule, editSchedule, deleteSchedule, getSchedule, getActiveSchedule}
+
+export {addSchedule, editSchedule, deleteSchedule, getSchedule, getActiveSchedule, deactivateSchedule}
 
 // -----------------------------------------------------------------

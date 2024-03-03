@@ -1,63 +1,82 @@
-$(document).ready(function() {
- 
-  const data = [{'contactName':'+62 812-9124-9590','contactNumber':'6281291249590','lastMessage':'Tes 2 Tes 3','lastMessageTime':1705124679,'lastMessageType':'chat','fromMe':true,'messageAck':2},{'contactName':'Test broadcast','contactProfilePicture':'https://pps.whatsapp.net/v/t61.24694-24/416470365_346962311609674_3295493382750445020_n.jpg?ccb=11-4&oh=01_AdSv-rXd7qk_BHnS0jc9W9i_Av6n2irG8cEHbXqVueAI6w&oe=65AF771B&_nc_sid=e6ed6c&_nc_cat=100','contactNumber':'120363154792682631','lastMessage':'1705142416','lastMessageTime':1705142417,'lastMessageType':'gp2','fromMe':true,'messageAck':null},{'contactName':'Broadcast Group','contactNumber':'120363152199205490','lastMessage':'\ntest\n','lastMessageTime':1687265220,'lastMessageType':'chat','fromMe':true,'messageAck':3},{'contactName':'Broadcast Group','contactNumber':'120363136902569016','lastMessage':null,'lastMessageTime':null,'lastMessageType':null,'fromMe':null,'messageAck':null}];
-  for (const item of data) {
+const loadingSpinner = document.getElementById("loadingSpinner");
+const loadingText = document.getElementById("loadingText");
 
-    let contactProfilePicture = "default_avatar.jpg";
-    let onlineIcon =item.fromMe? "<span></span>":"<span class='online_icon'></span>";
-    const date = new Date().getDate();
-    const formatDate = formattedDate(item.lastMessageTime);
+async function sendChat(){
+  try{
+    const message = document.getElementById("message").value;
+    const receiverNumber = document.getElementById("snumber").value;
 
-    const listItem = `<li class='chatSidebar' id=${item.contactNumber}>
-    <div class='d-flex bd-highlight'>
-        <div class='img_cont'>
-            <img src=${item.contactProfilePicture || contactProfilePicture} class='rounded-circle user_img'>
-            ${onlineIcon}
-        </div>
-        <div class='user_info'>
-            <span>${item.contactName}</span>
-            <p style="font-size:14px">${item.lastMessage}</p>
-            <p>${formatDate}</p>
-        </div>
-    </div>
-    </li>`;
+    const data = {
+      msg:message,
+      number:receiverNumber,
+    };
 
-    // Append the new li element to the ul
-    $('#contacts').append(listItem);
+    await fetch(`http://localhost:3000/sendChat`, {
+      method:'POST',
+      mode: "cors",
+      headers:{
+        "Content-Type":"application/json"
+      },
+      body:JSON.stringify(data)
+    });
+    window.location.href = 'http://localhost:3000/chat';
+  }catch(err){
+    console.log(err)
   }
-});
+};
 
-
-function formattedDate(timestamp) {
- 
-  // Create a new Date object from the timestamp
-  const messageDate = new Date(timestamp);
-
-  // Get current date
-  const currentDate = new Date();
-
-  // Check if the message date is in the same month as today
-  const isSameMonth = messageDate.getMonth() === currentDate.getMonth();
-
-  let formattedDate;
-
-  if (isSameMonth) {
-    // Format for the same month: "Hour.Minute"
-    const hour = messageDate.getHours();
-    const minute = messageDate.getMinutes();
-
-    // Add leading zero if needed
-    const formattedHour = hour < 10 ? `0${hour}` : hour;
-    const formattedMinute = minute < 10 ? `0${minute}` : minute;
-
-    formattedDate = `${formattedHour}.${formattedMinute}`;
-  } else {
-    // Format for a different month: "Day/Month"
-    const day = messageDate.getDate();
-    const month = messageDate.toLocaleString('en-US', { month: 'short' });
-
-    formattedDate = `${day}/${month}`;
-  }
-
-  return formattedDate;
+function reset(){
+  location.reload()
 }
+
+
+async function renderContent(){
+  loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px;");
+  loadingText.setAttribute("style", "margin-top: 5px;");
+  const response = await fetch('http://localhost:3000/getContact');
+  const contact = await response.json();
+  const selectGroup = document.getElementById('group-option');
+  const selectIndividual = document.getElementById('individual-option');
+
+  console.log(response);
+  console.log(contact);
+
+  for(const item of contact){
+    const isGroup = item.id._serialized.slice(-4) ==='g.us'; // can be "g.us" or "c.us" or "lid.us"
+    const isUser = item.id._serialized.slice(-4) ==='c.us';
+    const profilePicture = item.profilePic? item.profilePic : "/undraw_profile.svg";
+    const contactName = item.name || null ;
+    const option = document.createElement('option');
+    option.value = item.id._serialized;
+    option.setAttribute('data-content', `<img class='email img-profile rounded-circle' src='${profilePicture}' style='height:20px;width:20px;'><span class='text-dark'>${contactName}</span>`);
+    option.setAttribute('contactName', `${contactName}`);
+
+    if(isGroup && contactName){
+      selectGroup.appendChild(option);
+    }else if(isUser && contactName){
+      selectIndividual.appendChild(option);
+    }
+  }
+
+  $('.selectpicker').selectpicker('refresh');
+  loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px; display:none");
+  loadingText.setAttribute("style", "margin-top: 5px; display:none");
+
+};
+renderContent();
+
+
+// --------------------------------------------------------------------------------------------------------
+// fungsi initializer summernote
+$(document).ready(function () {
+  document.emojiButton ='fas fa-smile';
+  document.emojiSource ='summernote/summernoteemoji/tam-emoji/img';
+  $('#message').summernote({
+    placeholder: 'To insert emoji press (Win + .)',
+  tabsize: 3,
+  height: 500,
+  toolbar: [
+  ['font', ['bold', 'italic', 'strikethrough']],
+  ]
+  })
+});

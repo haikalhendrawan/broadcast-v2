@@ -3,7 +3,7 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 import {fileURLToPath} from "url";
-import QRCode from "qrcode";
+import pool from "./config/db.ts";
 
 import app, {server} from "./config/app.ts";
 import io from "./config/io.ts";
@@ -18,6 +18,7 @@ import calendarRoute from "./routes/calendarRoute.ts";
 import jobsRoute from "./routes/jobsRoute.ts";
 import clientDataRoute from "./routes/clientDataRoute.ts";
 import { connectEvent } from "./event/io/connectionEvent.ts";
+import { deactivateSchedule } from "./controller/schedule.ts";
 
 // -----------------------------config--------------------
 
@@ -42,11 +43,13 @@ app.set('view engine', 'ejs');
 
 // -------------------------------------------------------------------
 
-client.initialize().catch((err:any)=>{
-  console.log(err)
-}); // initialize whatsapp web client
+deactivateSchedule(); // set seluruh cron job inactive
 
-io.on('connection', connectEvent); // Socket IO event
+client.initialize().catch((err:any)=>{ // initialize whatsapp web client
+  console.log(err)
+}); 
+
+io.on('connection', connectEvent); // seluruh event socket.io
 
 
 // ---------------------------------------------------------

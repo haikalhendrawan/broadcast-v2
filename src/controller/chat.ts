@@ -1,5 +1,6 @@
 import client from "../config/client.ts";
 import { Request, Response } from "express";
+import {unintendedMsgValidation, convertHtmlToWhatsApp, escapeHTML, replaceVariable} from "../utility/messageUtil.ts";
 
 
 const getChat = async(req: Request, res: Response) => {
@@ -63,4 +64,23 @@ const getContacts = async(req: Request, res: Response) => {
   res.json({contact, pp})
 };
 
-export {getChat, getChats, getContacts};
+const sendChat = async(req: Request, res: Response) => {
+  try{
+    const waText = await convertHtmlToWhatsApp(req.body.msg);
+    const number = req.body.number;
+
+    if(!waText || !number){
+      console.log('invalid msg or number')
+      return res.status(500).json({msg:"error sending msg", isError:true})
+    }
+
+    await client.sendMessage(number, waText);
+
+    return res.status(200).json({msg:"msg sent"})
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({isError:true, errorMessage:err});
+  }
+}
+
+export {getChat, getChats, getContacts, sendChat};

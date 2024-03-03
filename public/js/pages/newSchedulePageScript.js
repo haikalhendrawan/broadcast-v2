@@ -76,12 +76,6 @@ async function renderContent(){
 
 renderContent();
 
-
-
-
-
-
-
 // ----------------------------------------------------------------------------
 async function convertToCronExpression() {
   const recurringSchedule = document.getElementById('recurringschedule').value;
