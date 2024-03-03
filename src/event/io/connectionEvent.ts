@@ -30,7 +30,9 @@ import QRCode from "qrcode";
   client.on('disconnected', (reason) => {
     socket.emit('message', 'Whatsapp is disconnected!');
     client.destroy();
-    client.initialize();
+    client.initialize().catch((err)=>{
+      console.log(err)
+    });
   });
 }
 

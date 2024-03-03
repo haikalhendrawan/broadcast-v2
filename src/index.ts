@@ -42,7 +42,9 @@ app.set('view engine', 'ejs');
 
 // -------------------------------------------------------------------
 
-client.initialize(); // initialize whatsapp web client
+client.initialize().catch((err:any)=>{
+  console.log(err)
+}); // initialize whatsapp web client
 
 io.on('connection', connectEvent); // Socket IO event
 
