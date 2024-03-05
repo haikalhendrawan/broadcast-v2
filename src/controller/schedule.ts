@@ -1,6 +1,7 @@
 import client from "../config/client.ts";
 import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
+import { sendAt, timeout } from "cron";
 import cronstrue from 'cronstrue';
 import 'cronstrue/locales/id.js';
 import pool from "../config/db.ts"
@@ -62,6 +63,8 @@ const getSchedule = async(req:Request, res:Response) => {
     const adjRows = rows as RowDataPacket;
     const adjRows2 = adjRows.map((item:any) => {
         item.cron_expression = cronstrue.toString(item.cron, {locale: 'id'});
+        item.nextDue = sendAt(item.cron);
+        item.timeDue = timeout(item.cron);
       return item;
     })
     return res.status(200).json(adjRows2);

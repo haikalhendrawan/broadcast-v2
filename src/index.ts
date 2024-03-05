@@ -16,6 +16,7 @@ import referenceRoute from "./routes/referenceRoute.ts";
 import variableRoute from "./routes/variableRoute.ts";
 import calendarRoute from "./routes/calendarRoute.ts";
 import jobsRoute from "./routes/jobsRoute.ts";
+import authRoute from "./routes/authRoute.ts";
 import clientDataRoute from "./routes/clientDataRoute.ts";
 import { connectEvent } from "./event/io/connectionEvent.ts";
 import { deactivateSchedule } from "./controller/schedule.ts";
@@ -28,6 +29,7 @@ const __dirname:string = path.dirname(__filename);
 // ---------------------------Middlewares----------------------------
 app.use(express.static(path.join(__dirname,'..', 'public')));
 app.use(express.json());
+app.use(authRoute);
 app.use(homeRoute);
 app.use(chatRoute);
 app.use(qrRoute);

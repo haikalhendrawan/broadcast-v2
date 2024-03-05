@@ -65,6 +65,39 @@
                             </div>
                         </div>
 
+                        <!-- Total Broadcast -->
+                        <div class="col-xl-4 col-md-6 mb-4">
+                            <div class="card border-left-primary  shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col mr-2">
+                                            <div class="text-xs font-weight-bold text-gray-800 text-uppercase mb-1">
+                                                Next schedule
+                                            </div>
+                                            <div class="text-xs mb-0 mt-1 row">
+                                                <div class="col-md-4" style="gap: 0px; margin: 0px;">
+                                                    <p style=" margin: 0px;">Title</p>
+                                                    <p style=" margin: 0px;">Time Due</p>
+                                                    <p style=" margin: 0px;">Day status</p>
+                                                </div>
+                                                <div class="col-md-1" >
+                                                    <p style=" margin: 0px;">:</p>
+                                                    <p style=" margin: 0px;">:</p>
+                                                    <p style=" margin: 0px;">:</p>
+                                                </div>
+                                                <div class="col text-gray-800" id="schedule-info">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-auto">
+                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                         <!-- Broadcast Selesai -->
                         <div class="col-xl-4 col-md-6 mb-4">
                             <div class="card border-left-primary  shadow h-100 py-2">
@@ -72,35 +105,25 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-uppercase mb-1">
-                                                Unread Chat
+                                                Concurrent login
                                             </div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-bookmark fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                            <div class="h6 mb-0 font-weight-bold text-gray-800" id="broadcast-count"> 
+                                                12
+                                            </div>
+                                            <div class="text-xs mb-0 mt-1 row">
+                                                <div class="col-md-4" style="gap: 0px; margin: 0px;">
+                                                    <p style=" margin: 0px;">Last IP</p>
+                                                </div>
+                                                <div class="col-md-1" >
+                                                    <p style=" margin: 0px;">:</p>
+                                                </div>
+                                                <div class="col text-gray-800" id="schedule-info">
 
-                        <!-- Total Broadcast -->
-                        <div class="col-xl-4 col-md-6 mb-4">
-                            <div class="card border-left-primary  shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold  text-uppercase mb-1">
-                                                Total Broadcast
-                                            </div>
-                                            <div class="row no-gutters align-items-center">
-                                                <div class="col-auto">
-                                                    <div class="h5 mb-0 mr-3 font-weight-bold text-gray-800"></div>
                                                 </div>
                                             </div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-clipboard-list fa-2x text-gray-300"></i>
+                                            <i class="fas fa-bookmark fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -114,7 +137,7 @@
                         <div class="col-xl-7 col-lg-5">
                             <div class="card shadow mb-4">
                                 <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold ">Broadcast Received</h6>
+                                    <h6 class="m-0 font-weight-bold ">Broadcast Count</h6>
                                 </div>
                                 <div class="card-body">
                                     <div class="chart-area">
@@ -187,8 +210,6 @@
     <!-- Scroll to Top Button-->
     <%- include("partials/scrolltotop") %>
 
-    <!-- Include Modal-->
-    <%- include("partials/modal") %>
 
     <!-- Bootstrap core JavaScript-->
     <script src="vendor/jquery/jquery.min.js"></script>
@@ -213,7 +234,7 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <!--main page level js-->
-    <script src="/js/pages/indexPageScript.js"></script>
+    <script type="module" src="/js/pages/indexPageScript.js"></script>
 
 
 </body>

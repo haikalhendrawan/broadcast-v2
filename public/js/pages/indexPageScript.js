@@ -1,6 +1,8 @@
+
 async function renderContent(){
   renderContact();
   renderInfo();
+  renderSchedule();
 };
 
 
@@ -9,8 +11,8 @@ async function renderContact(){
   const selectIndividual = document.getElementById('userContactDisplay');
 
   try{
-    loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px;");
-    loadingText.setAttribute("style", "margin-top: 5px;");
+    // loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px;");
+    // loadingText.setAttribute("style", "margin-top: 5px;");
 
     const response = await fetch('http://localhost:3000/getContact');
     const contact = await response.json();
@@ -37,8 +39,8 @@ async function renderContact(){
       }
     }
 
-    loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px; display:none");
-    loadingText.setAttribute("style", "margin-top: 5px; display:none");
+    // loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px; display:none");
+    // loadingText.setAttribute("style", "margin-top: 5px; display:none");
     console.log('render contact success');
 
   }catch(err){
@@ -48,7 +50,7 @@ async function renderContact(){
     selectGroup.appendChild(newDiv);
     selectIndividual.appendChild(newDiv);
 
-    return console.log(err)
+    return console.log('render contact fail' +err)
   }
 }
 
@@ -62,7 +64,7 @@ async function renderInfo(){
       `
         <p class="text-success" style=" margin: 0px;">Up</p>
         <p style=" margin: 0px;"> ${info.pushname} </p>
-        <p style=" margin: 0px;"> ${info.wid} </p>
+        <p style=" margin: 0px;"> ${info.wid._serialized} </p>
       `;
     newDiv.innerHTML = text;
     clientDiv.appendChild(newDiv);
@@ -78,6 +80,39 @@ async function renderInfo(){
     newDiv.innerHTML = text;
     clientDiv.appendChild(newDiv);
     console.log("fail to render Info" + err)
+  }
+}
+
+async function renderSchedule(){
+  const schedDiv =  document.getElementById('schedule-info');
+  try{
+    const response = await fetch('http://localhost:3000/getSchedule');
+    const schedule = await response.json();
+    const response2 = await fetch('http://localhost:3000/getTodayValAPI');
+    const dayVal = await response2.json();
+    const processed = schedule.filter((item) => {
+      return item.status ===1
+    }).toSorted((a, b) => {
+      return parseInt(a.timeDue) - parseInt(b.timeDue)
+    });
+    const nextSched = processed[0];
+    const dueTime = new Date(new Date().getTime()+nextSched.timeDue);
+    const options = { hour: 'numeric', minute: 'numeric', hour12: false };
+    const dueTimeStr = dueTime.toDateString() + ' ' + dueTime.toLocaleTimeString('en-US', options);
+    const newDiv= document.createElement('div');
+    const text = 
+      `
+        <p  style=" margin: 0px;"> ${nextSched.title}</p>
+        <p style=" margin: 0px;"> ${dueTimeStr} </p>
+        <p class=${dayVal===1?"text-success":"text-danger"} style=" margin: 0px;"> 
+          ${dayVal===1?"Active":"Inactive"} 
+        </p>
+      `;
+    newDiv.innerHTML = text;
+    schedDiv.appendChild(newDiv);
+
+  }catch(err){
+    console.log('fail to render Schedule' + err)
   }
 }
 

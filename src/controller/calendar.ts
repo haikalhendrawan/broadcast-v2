@@ -44,4 +44,21 @@ const getTodayValidation = async(date:string, month:number, year:number) => {
   }
 };
 
-export {editCalendar, getCalendar, getTodayValidation};
+const getTodayValAPI = async(req:Request, res:Response) => {
+  try{
+    const today: Date = new Date();
+    const date: string = today.getDate().toString();
+    const month: number = today.getMonth();
+    const year: number = 0;
+    const q = `SELECT ${pool.escapeId(date)} FROM calendar WHERE month = ? AND year = ?`;
+    const [rows] = await pool.execute(q, [month, year]);
+    const result = rows as RowDataPacket;
+    const todayValidation = result[0][date];
+    res.status(200).json(todayValidation); // 1(true) or 0(false)
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({message:'fail getting data ', isError:true})
+  }
+};
+
+export {editCalendar, getCalendar, getTodayValidation, getTodayValAPI};
