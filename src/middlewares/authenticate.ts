@@ -6,18 +6,28 @@ import express from "express";
 import session from "express-session";
 import passport from "passport";
 import * as passportStrategy from "passport-local";
+import { v4 as uuidv4 } from 'uuid';
 
 // --------------------------------------------------------
 
 
 // -----------------------------------------------------------
-export function initSession(req: Request ,res: Response, next: NextFunction): Response | void {
-  
-}
+async function authL1(sessionId:string):Promise<Boolean|string[]>{
+  const q = "SELECT FROM session WHERE session_id = ?";
+  const [rows] = await pool.execute(q, [sessionId]);
+  const result = rows as RowDataPacket;
 
-export function isAuthenticated(req: Request, res: Response, next: NextFunction): Response | void {
-  if(req.user)
-    return next();
-  else
-    res.redirect("/login"); 
+  if(result.length===0){
+    return false
+  }
+
+  if(result.length>0){
+    const expireAt = result[0].expire_at;
+    const now = new Date().getTime();
+    if(now>expireAt){
+      return false
+    }
+  }
+
+  return result[1]
 }
