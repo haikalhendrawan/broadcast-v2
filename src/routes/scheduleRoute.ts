@@ -9,13 +9,6 @@ router.post("/editSchedule", editSchedule);
 router.get("/deleteSchedule/:id", deleteSchedule);
 
 
-router.get("/schedule", (req: Request, res: Response):void => {
-  res.render("schedule.ejs")
-});
-
-router.get("/new-schedule", (req: Request, res: Response):void => {
-  res.render("newSchedule.ejs")
-});
 
 
 

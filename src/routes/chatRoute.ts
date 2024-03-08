@@ -9,9 +9,6 @@ router.get("/getChats", getChats);
 router.get("/getContacts/:serialized", getContacts);
 router.post("/sendChat", sendChat);
 
-router.get("/chat", (req: Request, res: Response):void => {
-  res.render('chat.ejs')
-});
 
 
 export default router;

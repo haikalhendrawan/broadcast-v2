@@ -4,30 +4,94 @@ import pool from "../config/db.ts";
 import { RowDataPacket } from "mysql2";
 import express from "express";
 import session from "express-session";
-import passport from "passport";
-import * as passportStrategy from "passport-local";
 import { v4 as uuidv4 } from 'uuid';
 
+
+interface UserRequest extends Request{
+  userId:string,
+  userIP:string
+}
+
 // --------------------------------------------------------
+async function reverseAuth(req:Request, res:Response, next:NextFunction){
+  const sessionCookie = req.cookies.session;
 
+  if(!sessionCookie || sessionCookie.length===0){
+    return next()
+  }
 
-// -----------------------------------------------------------
-async function authL1(sessionId:string):Promise<Boolean|string[]>{
-  const q = "SELECT FROM session WHERE session_id = ?";
-  const [rows] = await pool.execute(q, [sessionId]);
+  const q = "SELECT * FROM session WHERE session_id = ?";
+  const [rows] = await pool.query(q, [sessionCookie]);
   const result = rows as RowDataPacket;
 
   if(result.length===0){
-    return false
+    return next()
   }
 
   if(result.length>0){
     const expireAt = result[0].expire_at;
     const now = new Date().getTime();
     if(now>expireAt){
-      return false
+      return next()
     }
   }
 
-  return result[1]
+  return res.redirect("/")
 }
+
+async function authViews(req:Request, res:Response, next:NextFunction){
+  const sessionCookie = req.cookies.session;
+
+  if(!sessionCookie || sessionCookie.length===0){
+    return res.redirect("/login")
+  }
+
+  const q = "SELECT * FROM session WHERE session_id = ?";
+  const [rows] = await pool.query(q, [sessionCookie]);
+  const result = rows as RowDataPacket;
+
+  if(result.length===0){
+    return res.redirect("/login")
+  }
+
+  if(result.length>0){
+    const expireAt = result[0].expire_at;
+    const now = new Date().getTime();
+    if(now>expireAt){
+      return res.redirect("/login")
+    }
+  }
+
+  next()
+
+}
+
+async function authService(req:Request, res:Response, next:NextFunction){
+  const sessionCookie = req.cookies.session;
+
+  if(!sessionCookie || sessionCookie.length===0){
+    return res.status(401).json({msg:'Not authenticated'})
+  }
+
+  const q = "SELECT * FROM session WHERE session_id = ?";
+  const [rows] = await pool.query(q, [sessionCookie]);
+  const result = rows as RowDataPacket;
+
+  if(result.length===0){
+    return res.status(401).json({msg:'Not authenticated'})
+  }
+
+  if(result.length>0){
+    const expireAt = result[0].expire_at;
+    const now = new Date().getTime();
+    if(now>expireAt){
+      return res.status(401).json({msg:'Not authenticated'})
+    }
+  }
+
+  next()
+
+}
+
+
+export {reverseAuth, authViews, authService}

@@ -1,19 +1,11 @@
 import express, { Request, Response } from "express";
-import {addUser, initSession} from "../controller/auth.ts";
+import {addUser, authVerify, initSession, logout} from "../controller/auth.ts";
 
 const router = express.Router();
 
-
-router.get("/login", (req: Request, res: Response):void => {
-  res.render("login.ejs")
-});
-
-router.post("/login", initSession, (req, res):void => {
-  res.redirect(`/home`)
-});
-
-
+router.post("/login", authVerify, initSession);
 router.post("/addUser", addUser);
+router.get("/logout", logout);
 
 
 export default router;
