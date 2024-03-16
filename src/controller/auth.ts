@@ -99,7 +99,6 @@ const refresh = async(req:Request, res:Response, next:NextFunction) => {
     const newSessId = uuidv4();
     const createdAt = new Date().getTime();
     const expireAt = createdAt + 43200000;
-    console.log(sessionId, newSessId, createdAt, expireAt)
     const q = `UPDATE session 
                 SET session_id = ? , created_at = ?, expire_at = ? 
                 WHERE session_id = ?`;

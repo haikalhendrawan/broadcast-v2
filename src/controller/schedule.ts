@@ -43,6 +43,27 @@ const editSchedule = async(req:Request, res:Response) => {
   }
 };
 
+const editScheduleDetail = async(req:Request, res:Response) : Promise<Response> => {
+  try{
+    const title = req.body.title;
+    const message = req.body.message;
+    const receiverNumber = req.body.receiverNumber;
+    const receiverName = req.body.receiverName;
+    const cron = req.body.cron;
+
+    const q = ` UPDATE schedule 
+                SET title = ?, message = ?, receiver_number = ?, receiver_name = ?, cron = ? 
+                WHERE id = ?`;
+    await pool.execute(q, [title, message, receiverNumber, receiverName, cron]);
+
+    return res.status(200).json({message:'edit data success'})
+  }catch(err){
+    console.log(err);
+    return res.status(500).json({message:'fail to edit data', isError:true})
+  }
+};
+
+
 const deleteSchedule = async(req:Request, res:Response) => {
   try{
     const scheduleId = req.params.id;
@@ -98,6 +119,6 @@ const deactivateSchedule = async() => {
 
 
 
-export {addSchedule, editSchedule, deleteSchedule, getSchedule, getActiveSchedule, deactivateSchedule}
+export {addSchedule, editSchedule, editScheduleDetail, deleteSchedule, getSchedule, getActiveSchedule, deactivateSchedule}
 
 // -----------------------------------------------------------------
