@@ -41,8 +41,10 @@ async function reverseAuth(req:Request, res:Response, next:NextFunction){
 
 async function authViews(req:Request, res:Response, next:NextFunction){
   const sessionCookie = req.cookies.session;
+  console.log(`the current request cookie is ${req.cookies.session}`)
 
   if(!sessionCookie || sessionCookie.length===0){
+    console.log('error no session cookie')
     return res.redirect("/login")
   }
 
@@ -51,6 +53,7 @@ async function authViews(req:Request, res:Response, next:NextFunction){
   const result = rows as RowDataPacket;
 
   if(result.length===0){
+    console.log('error no cookie match found')
     return res.redirect("/login")
   }
 
@@ -58,6 +61,7 @@ async function authViews(req:Request, res:Response, next:NextFunction){
     const expireAt = result[0].expire_at;
     const now = new Date().getTime();
     if(now>expireAt){
+      console.log('cookie expired')
       return res.redirect("/login")
     }
   }

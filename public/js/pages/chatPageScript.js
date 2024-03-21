@@ -29,6 +29,19 @@ function reset(){
   location.reload()
 }
 
+function handleChange(){
+  const fileInputValue = document.getElementById("file").files[0].name;
+  const fileInputLabel = document.getElementById("file-input-label");
+
+  fileInputLabel.innerText = fileInputValue;
+}
+
+function handleFileReset(){
+  const fileInput= document.getElementById("file");
+  fileInput.value = '';
+  const fileInputLabel = document.getElementById("file-input-label");
+  fileInputLabel.innerText = 'Choose File';
+}
 
 async function renderContent(){
   loadingSpinner.setAttribute("style", "height:1.5rem; width:1.5rem; margin-top: 5px;");
@@ -63,6 +76,7 @@ async function renderContent(){
   loadingText.setAttribute("style", "margin-top: 5px; display:none");
 
 };
+
 renderContent();
 
 

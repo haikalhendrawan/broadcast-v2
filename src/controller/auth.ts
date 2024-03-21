@@ -105,6 +105,7 @@ const refresh = async(req:Request, res:Response, next:NextFunction) => {
     await pool.execute(q, [newSessId, createdAt, expireAt, sessionId]) 
 
     res.cookie('session', newSessId, {expires: new Date(expireAt)})
+    console.log('current cookie id ' + newSessId)
     next()
   }catch(err){
     console.log(err);
