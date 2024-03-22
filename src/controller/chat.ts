@@ -1,6 +1,9 @@
 import client from "../config/client.ts";
 import { Request, Response } from "express";
+import upload from "../config/multer.ts";
 import {unintendedMsgValidation, convertHtmlToWhatsApp, escapeHTML, replaceVariable} from "../utility/messageUtil.ts";
+import Whatsapp from 'whatsapp-web.js'
+const {MessageMedia} = Whatsapp
 
 
 const getChat = async(req: Request, res: Response) => {
@@ -83,4 +86,45 @@ const sendChat = async(req: Request, res: Response) => {
   }
 }
 
-export {getChat, getChats, getContacts, sendChat};
+const sendChatWithFile = async(req: Request, res: Response) => {
+  upload(req, res, async(err) => {
+    if(err){
+      return res.status(500).json({isError:true, msg:'fail to upload file'+err})
+    }
+
+    const file = req.file;
+
+    if(file){
+      const fileName = file.filename;
+      const media = MessageMedia.fromFilePath('../../../uploads/'+fileName);
+
+      console.log('the msg is: ' + req.body.msg);
+      console.log('the number is: '+ req.body.number);
+
+      try{
+        const waText = await convertHtmlToWhatsApp(req.body.msg);
+        const number = req.body.number;
+
+        if(!waText || !number){
+          console.log('invalid msg or number')
+          return res.status(500).json({msg:"error sending msg", isError:true})
+        }
+
+        await client.sendMessage(number, media);
+        await client.sendMessage(number, waText);
+
+        console.log(number)
+
+        return res.status(200).json({msg:'success'});
+      }catch(err){
+        console.log(err);
+        return res.status(500).json({isError:true, msg:'Failed',err});
+      }
+    }else{
+      return res.status(500).json({isError:true, msg:'File didnt exist',err});
+    }
+    
+  })
+}
+
+export {getChat, getChats, getContacts, sendChat, sendChatWithFile};

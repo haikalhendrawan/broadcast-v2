@@ -1,6 +1,17 @@
 const loadingSpinner = document.getElementById("loadingSpinner");
 const loadingText = document.getElementById("loadingText");
 
+async function submit(){
+  const fileInput = document.getElementById('file').value;
+
+  if(fileInput && fileInput.length>1){
+    sendChatAndFile()
+  }else{
+    sendChat()
+  }
+}
+
+
 async function sendChat(){
   try{
     const message = document.getElementById("message").value;
@@ -18,6 +29,28 @@ async function sendChat(){
         "Content-Type":"application/json"
       },
       body:JSON.stringify(data)
+    });
+    window.location.href = 'http://localhost:3000/chat';
+  }catch(err){
+    console.log(err)
+  }
+};
+
+async function sendChatAndFile(){
+  try{
+    const message = document.getElementById("message").value;
+    const receiverNumber = document.getElementById("snumber").value;
+    const file = document.getElementById("file").files[0];
+
+    let formData = new FormData();
+    formData.append('msg', message);
+    formData.append('number', receiverNumber);
+    formData.append('file', file);
+
+    await fetch(`http://localhost:3000/sendChatWithFile`, {
+      method:'POST',
+      mode: "cors",
+      body:formData
     });
     window.location.href = 'http://localhost:3000/chat';
   }catch(err){
