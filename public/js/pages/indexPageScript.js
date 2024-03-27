@@ -3,6 +3,7 @@ async function renderContent(){
   renderContact();
   renderInfo();
   renderSchedule();
+  renderActiveSession()
 };
 
 
@@ -72,7 +73,7 @@ async function renderInfo(){
   }catch(err){
     const text = 
       `
-        <p class="text-success" style=" margin: 0px;">Down</p>
+        <p class="text-danger" style=" margin: 0px;">Down</p>
         <p style=" margin: 0px;">-</p>
         <p style=" margin: 0px;">-</p>
       `;
@@ -113,6 +114,32 @@ async function renderSchedule(){
 
   }catch(err){
     console.log('fail to render Schedule' + err)
+  }
+}
+
+async function renderActiveSession(){
+  const ipCount = document.getElementById("ip-count");
+  const lastIP = document.getElementById("last-ip");
+
+  try{
+    const response = await fetch("http://localhost:3000/getActiveSession");
+    const data = await response.json();
+    const filteredIP = [];
+
+    data.forEach((item) => {
+      filteredIP.includes(item.value)?null:filteredIP.push(item.value)
+    })
+    const filteredData = filteredIP.map((item) => {
+      return data.find((row) => row.value===item)
+    })
+
+    ipCount.innerText = data.length;
+    lastIP.innerHTML = `
+    ${filteredIP[0]?filteredIP[0]:''} <br/> 
+    ${filteredIP[1]?filteredIP[1]:''} <br/> 
+    ${filteredIP[2]?filteredIP[2]:''}`
+  }catch(err){
+    console.log(err)
   }
 }
 

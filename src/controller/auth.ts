@@ -114,4 +114,16 @@ const refresh = async(req:Request, res:Response, next:NextFunction) => {
   
 }
 
-export {addUser, authVerify, initSession, refresh, logout}
+
+const getActiveSession = async(req: Request, res: Response) => {
+  try{
+    const q = `SELECT * FROM session`;
+    const [rows] = await pool.execute(q);
+
+    return res.status(200).json(rows)
+  }catch(err){
+    return res.status(500).json({isError:true, msg:err})
+  }
+}
+
+export {addUser, authVerify, initSession, refresh, logout, getActiveSession}
