@@ -1,7 +1,7 @@
-import client from "../config/client.ts";
+import client from "../config/client";
 import { Request, Response } from "express";
-import upload from "../config/multer.ts";
-import {unintendedMsgValidation, convertHtmlToWhatsApp, escapeHTML, replaceVariable} from "../utility/messageUtil.ts";
+import upload from "../config/multer";
+import {unintendedMsgValidation, convertHtmlToWhatsApp, escapeHTML, replaceVariable} from "../utility/messageUtil";
 import Whatsapp from 'whatsapp-web.js'
 const {MessageMedia} = Whatsapp
 

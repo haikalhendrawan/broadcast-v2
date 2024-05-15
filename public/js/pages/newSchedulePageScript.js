@@ -83,16 +83,24 @@ async function convertToCronExpression() {
   const date = document.getElementById('recurringdate').value;
   let cronExpression = '';
 
+  const dateParts = date.split('-');
+  const selectedMinutes = time.split(':')[1];
+  const selectedHours = time.split(':')[0];
+  const selectedMonth = dateParts[1];
+
   // Convert the selected recurring schedule into a cron expression
   switch (recurringSchedule) {
       case 'no-schedule':
-      break;
+          break;
       case 'non-recurring':
-          const dateParts = date.split('-');
-          const selectedMinutes = time.split(':')[1];
-          const selectedHours = time.split(':')[0];
-          const selectedMonth = dateParts[1];
           cronExpression = `${selectedMinutes} ${selectedHours} ${dateParts[2]} ${selectedMonth} *`;
+          break;
+      case 'once a week':
+          const selectedDay = document.getElementById('recurringday').value;
+          cronExpression = `${selectedMinutes} ${selectedHours} * * ${selectedDay}`;
+          break;
+      case 'once a month':
+          cronExpression = `${selectedMinutes} ${selectedHours} ${dateParts[2]} * *`;
           break;
       case 'every workday':
           const workdayTimeParts = time.split(':');
@@ -122,9 +130,13 @@ $(document).ready(function () {
 
 // fungsi show tambahan input
 function yesnoCheck(target) {
-  if (target.value === "non-recurring") {
+  if (target.value === "non-recurring" || target.value === "once a month" )  {
       document.getElementById("date-input").style.display = "block";
+      document.getElementById("day-input").style.display = "none";
+  } else if(target.value === "once a week"){
+      document.getElementById("day-input").style.display = "block";
   } else {
       document.getElementById("date-input").style.display = "none";
+      document.getElementById("day-input").style.display = "none";
   }
 };

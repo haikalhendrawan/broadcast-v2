@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import {getCalendar, editCalendar, getTodayValAPI} from "../controller/calendar.ts";
+import {getCalendar, editCalendar, getTodayValAPI} from "../controller/calendar";
 
 
 const router = express.Router();

@@ -1,4 +1,4 @@
-import pool from "../config/db.ts";
+import pool from "../config/db";
 import { NextFunction, Request, Response } from "express";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 import bcrypt from "bcrypt";

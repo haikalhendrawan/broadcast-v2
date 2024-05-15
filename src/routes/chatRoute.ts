@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import {getChat, getChats, getContacts, sendChat, sendChatWithFile} from "../controller/chat.ts";
+import {getChat, getChats, getContacts, sendChat, sendChatWithFile} from "../controller/chat";
 
 
 const router = express.Router();

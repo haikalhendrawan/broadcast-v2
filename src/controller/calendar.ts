@@ -1,4 +1,4 @@
-import pool from "../config/db.ts";
+import pool from "../config/db";
 import { Request, Response } from "express";
 import { ResultSetHeader, RowDataPacket } from "mysql2";
 

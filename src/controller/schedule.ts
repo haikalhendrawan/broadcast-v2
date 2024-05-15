@@ -1,10 +1,10 @@
-import client from "../config/client.ts";
+import client from "../config/client";
 import { Request, Response } from "express";
 import { RowDataPacket } from "mysql2";
 import { sendAt, timeout } from "cron";
 import cronstrue from 'cronstrue';
 import 'cronstrue/locales/id.js';
-import pool from "../config/db.ts"
+import pool from "../config/db"
 
 
 // -----------------------------------------------------------------

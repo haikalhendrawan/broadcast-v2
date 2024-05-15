@@ -1,6 +1,6 @@
 import { Express, Request, Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
-import pool from "../config/db.ts";
+import pool from "../config/db";
 import { RowDataPacket } from "mysql2";
 import express from "express";
 import session from "express-session";

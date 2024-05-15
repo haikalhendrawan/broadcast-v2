@@ -1,6 +1,6 @@
 import mysql from "mysql2/promise";
 import "dotenv/config";
-import { deactivateSchedule } from "../controller/schedule.ts";
+import { deactivateSchedule } from "../controller/schedule";
 
 
 const pool = mysql.createPool({

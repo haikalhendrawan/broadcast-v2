@@ -3,28 +3,24 @@ import "dotenv/config";
 import fs from "fs";
 import path from "path";
 import {fileURLToPath} from "url";
-import pool from "./config/db.ts";
+import pool from "./config/db";
 import cookieParser from "cookie-parser";
 
-import app, {server} from "./config/app.ts";
-import io from "./config/io.ts";
-import client from "./config/client.ts";
-import chatRoute from "./routes/chatRoute.ts";
-import viewsRoute from "./routes/viewsRoute.ts";
-import scheduleRoute from "./routes/scheduleRoute.ts";
-import variableRoute from "./routes/variableRoute.ts";
-import calendarRoute from "./routes/calendarRoute.ts";
-import jobsRoute from "./routes/jobsRoute.ts";
-import authRoute from "./routes/authRoute.ts";
-import clientDataRoute from "./routes/clientDataRoute.ts";
-import { connectEvent } from "./event/io/connectionEvent.ts";
-import { deactivateSchedule } from "./controller/schedule.ts";
-import noCache from "./middlewares/noCache.ts";
+import app, {server} from "./config/app";
+import io from "./config/io";
+import client from "./config/client";
+import chatRoute from "./routes/chatRoute";
+import viewsRoute from "./routes/viewsRoute";
+import scheduleRoute from "./routes/scheduleRoute";
+import variableRoute from "./routes/variableRoute";
+import calendarRoute from "./routes/calendarRoute";
+import jobsRoute from "./routes/jobsRoute";
+import authRoute from "./routes/authRoute";
+import clientDataRoute from "./routes/clientDataRoute";
+import { connectEvent } from "./event/io/connectionEvent";
+import { deactivateSchedule } from "./controller/schedule";
+import noCache from "./middlewares/noCache";
 
-// -----------------------------config--------------------
-
-const __filename:string = fileURLToPath(import.meta.url);
-const __dirname:string = path.dirname(__filename);
 
 // ---------------------------Middlewares----------------------------
 app.use(express.static(path.join(__dirname,'..', 'public')));

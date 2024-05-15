@@ -110,9 +110,8 @@
                                 <option value ="non-recurring">Non Recurring</option>
                                 <option value ="every workday">Every Workday (Mon-Fri)</option>
                                 <option value ="every day">Every Day (Mon-Sun)</option>
-                                <!--<option>Every Week</option>
-                                <option>Every Month</option>
-                                <option>Custom</option>-->
+                                <option value ="once a week">Once a Week</option>
+                                <option value ="once a month">Once a Month</option>
                             </select>
                         </div>
 
@@ -131,6 +130,22 @@
                             <input type="time" class="form-control col-sm-2" id="recurringtime" name="recurringtime" aria-describedby="timehelp" placeholder="Jam/Menit">
                             <small class="form-text text-muted ml-1">Pesan akan di kirim setiap jam tersebut</small>
                         </div>
+
+                        <!-- Recurring Day -->
+                        <div class="form-group mt-3" id="day-input" style="display:none;">
+                            <label for="recurringday" class="font-weight-bold">Day</label>
+                            <select class="form-control col-sm-2" id="recurringday" name="recurringday">
+                                <option value="0">Sunday</option>
+                                <option value="1">Monday</option>
+                                <option value="2">Tuesday</option>
+                                <option value="3">Wednesday</option>
+                                <option value="4">Thursday</option>
+                                <option value="5">Friday</option>
+                                <option value="6">Saturday</option>
+                            </select>
+                            <small class="form-text text-muted ml-1">Select the day of the week for the recurring schedule</small>
+                        </div>
+
 
                         <!--Cron expression (hidden input)-->
                         <div>

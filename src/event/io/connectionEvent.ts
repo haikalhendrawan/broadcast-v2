@@ -1,4 +1,4 @@
-import client from "../../config/client.ts";
+import client from "../../config/client";
 import QRCode from "qrcode";
 
  const connectEvent = (socket:any) => {
@@ -25,6 +25,10 @@ import QRCode from "qrcode";
 
   client.on('auth_failure', (session) => {
     socket.emit('message', 'Auth failure, restarting...');
+  });
+
+  client.on('message', (message) => {
+    console.log(message.body)
   });
 
   client.on('disconnected', (reason) => {

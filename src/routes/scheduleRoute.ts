@@ -1,5 +1,5 @@
 import express, { Request, Response } from "express";
-import { addSchedule, getSchedule, editSchedule, editScheduleDetail, deleteSchedule } from "../controller/schedule.ts";
+import { addSchedule, getSchedule, editSchedule, editScheduleDetail, deleteSchedule } from "../controller/schedule";
 
 const router = express.Router();
 

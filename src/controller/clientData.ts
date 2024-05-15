@@ -1,4 +1,4 @@
-import client from "../config/client.ts";
+import client from "../config/client";
 import { Request, Response } from "express";
 
 

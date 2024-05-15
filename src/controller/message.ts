@@ -1,10 +1,10 @@
-import client from "../config/client.ts";
+import client from "../config/client";
 import { RowDataPacket } from "mysql2";
-import { getDailyVariable } from "./variable.ts";
-import { getTodayValidation } from "./calendar.ts";
-import { getActiveSchedule } from "./schedule.ts";
-import {unintendedMsgValidation, convertHtmlToWhatsApp, escapeHTML, replaceVariable} from "../utility/messageUtil.ts";
-import { getTime } from "../utility/timeUtil.ts";
+import { getDailyVariable } from "./variable";
+import { getTodayValidation } from "./calendar";
+import { getActiveSchedule } from "./schedule";
+import {unintendedMsgValidation, convertHtmlToWhatsApp, escapeHTML, replaceVariable} from "../utility/messageUtil";
+import { getTime } from "../utility/timeUtil";
 
 
 const sendMorningSchedule = async(chatId:string, msgBody:string) => {
