@@ -3,12 +3,13 @@ import { RowDataPacket } from "mysql2";
 import { getDailyVariable } from "./variable";
 import { getTodayValidation } from "./calendar";
 import { getActiveSchedule } from "./schedule";
+import * as weatherController from "./weather";
 import {unintendedMsgValidation, convertHtmlToWhatsApp, escapeHTML, replaceVariable} from "../utility/messageUtil";
 import { getTime } from "../utility/timeUtil";
 
 
 const sendMorningSchedule = async(chatId:string, msgBody:string) => {
-  const [today, date, dateString, day, month, year, tomorrowDate, tomorrowDateString] = getTime();
+  const {dateString, day, month, year, tomorrowDateString} = getTime();
 
   const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
@@ -31,7 +32,7 @@ const sendMorningSchedule = async(chatId:string, msgBody:string) => {
 };
 
 const sendEveningSchedule = async(chatId:string, msgBody:string) => {
-  const [today, date, dateString, day, month, year, tomorrowDate, tomorrowDateString] = getTime();
+  const {dateString, day, month, year, tomorrowDateString} = getTime();
 
   const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
@@ -65,7 +66,7 @@ const sendEveningSchedule = async(chatId:string, msgBody:string) => {
 };
 
 const sendSchedule = async(chatId:string, msgBody:string) => {
-  const [today, date, dateString, day, month, year, tomorrowDate, tomorrowDateString] = getTime();
+  const { dateString, day, month, year, tomorrowDateString} = getTime();
 
   const rows = await getDailyVariable(tomorrowDateString, month, year);
   const isWeekDay = unintendedMsgValidation(day); // true or false
@@ -88,8 +89,31 @@ const sendSchedule = async(chatId:string, msgBody:string) => {
 
 };
 
+const sendWeatherForecast = async(chatId:string, msgBody:string) => {
+  try{
+    const weatherArray = await weatherController.getTomorrow();
+    const selectedTime = weatherArray.slice(1, 4);
 
-export {sendMorningSchedule, sendEveningSchedule, sendSchedule}
+    let waText = `<p> Prakiraan cuaca esok hari: <br></p>`;
+
+    selectedTime.forEach((item) => {
+      const emoji = weatherController.getWeatherEmoji(item.kodeCuaca);
+      console.log(emoji)
+      const jam = item.jamCuaca.split(" ")[1].substring(0,2);
+
+      waText += `<p>${jam}.00 WIB - ${item.cuaca} ${emoji}</p>`
+    });
+
+    waText = await convertHtmlToWhatsApp(waText);
+
+    await client.sendMessage(chatId, waText);
+  }catch(err){
+    console.log(err);
+  }
+};
+
+
+export {sendMorningSchedule, sendEveningSchedule, sendSchedule, sendWeatherForecast}
 
 
 // -------------------------------------------------------------------------------------------

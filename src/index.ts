@@ -17,6 +17,7 @@ import calendarRoute from "./routes/calendarRoute";
 import jobsRoute from "./routes/jobsRoute";
 import authRoute from "./routes/authRoute";
 import clientDataRoute from "./routes/clientDataRoute";
+import weatherRoute from "./routes/weatherRoute";
 import { connectEvent } from "./event/io/connectionEvent";
 import { deactivateSchedule } from "./controller/schedule";
 import noCache from "./middlewares/noCache";
@@ -33,6 +34,7 @@ app.use(chatRoute);
 app.use(scheduleRoute);
 app.use(variableRoute);
 app.use(calendarRoute);
+app.use(weatherRoute);
 app.use(jobsRoute);
 app.use(clientDataRoute);
 
