@@ -60,7 +60,10 @@
                 </a>
                 <a class="dropdown-item" href="#">
                     <i class="fas fa-tag fa-sm fa-fw mr-2 text-gray-400"></i>
-                    2023
+                    <% 
+                        var year = today.getFullYear();
+                    %>
+                    <%= year %>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" onclick="handleLogout()">

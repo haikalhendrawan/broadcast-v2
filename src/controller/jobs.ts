@@ -11,17 +11,8 @@ const compileJobs = async() => {
   const result = await getActiveSchedule();
   const activeSchedule = result as RowDataPacket;
 
-  activeSchedule.map((item:any) => {
+  activeSchedule.map((item: any) => {
     const job = new CronJob(item.cron, () => {
-      if(item.title.toLowerCase()==='clock in'){
-        return messageController.sendMorningSchedule(item.receiver_number, item.message)
-      }
-      if(item.title.toLowerCase()==='clock out'){
-        return messageController.sendEveningSchedule(item.receiver_number, item.message)
-      }
-      if(item.title.toLowerCase()==='cuaca besok'){
-        return messageController.sendWeatherForecast(item.receiver_number, item.message)
-      }
       messageController.sendSchedule(item.receiver_number, item.message);
     });
     allJobs.push(job)

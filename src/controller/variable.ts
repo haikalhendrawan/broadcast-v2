@@ -10,8 +10,8 @@ const addVariable = async(req:Request, res:Response) => {
     const variableName = req.body.varName;
     const year = req.body.year;
 
-    const q = `INSERT INTO variable(variable_name) VALUES(?)`;
-    const [results] = await pool.execute(q, [variableName]);
+    const q = `INSERT INTO variable(variable_name, period) VALUES(?, ?)`;
+    const [results] = await pool.execute(q, [variableName, year]);
     const resultHeader = results as ResultSetHeader;
     const lastId = resultHeader.insertId;
 
@@ -108,7 +108,7 @@ async function getDailyVariable(variableDate:string, variableMonth:number, varia
   }catch(err){
     console.log(err);
   }
-}
+};
 
 
 

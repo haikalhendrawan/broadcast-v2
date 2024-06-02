@@ -18,9 +18,7 @@ async function renderContent(){
     const actionButtonText = item.status===1?'Stop':'Start';
     const actionButtonIcon = item.status===1?'fas fa-stop':'fas fa-play';
     const statusToUpdate = item.status===1?0:1;
-    const deleteButton = item.title.toLowerCase()==='clock in' || item.title.toLowerCase()==='clock out' || item.title.toLowerCase()==='cuaca besok' 
-                          ?null
-                          :`<span> <a class='button btn-sm btn-danger' style='cursor:pointer' onclick='deleteSchedule(${item.id})'><i class='fas fa-trash'></i></a></span>`;
+    const deleteButton = `<span> <a class='button btn-sm btn-danger' style='cursor:pointer' onclick='deleteSchedule(${item.id})'><i class='fas fa-trash'></i></a></span>`;
 
     row.innerHTML =`
       <td>${index+1}</td>

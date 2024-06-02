@@ -89,16 +89,26 @@ const sendSchedule = async(chatId:string, msgBody:string) => {
 
 };
 
-const sendWeatherForecast = async(chatId:string, msgBody:string) => {
+const sendWeatherForecast = async(chatId:string) => {
   try{
+    const weatherArrayToday = await weatherController.getToday();
+    const selectedTimeToday = weatherArrayToday.slice(1, 4);
     const weatherArray = await weatherController.getTomorrow();
     const selectedTime = weatherArray.slice(1, 4);
 
-    let waText = `<p> Prakiraan cuaca esok hari: <br></p>`;
+    let waText = `<p> Prakiraan cuaca hari ini : <br></p>`;
+
+    selectedTimeToday.forEach((item) => {
+      const emoji = weatherController.getWeatherEmoji(item.kodeCuaca);
+      const jam = item.jamCuaca.split(" ")[1].substring(0,2);
+
+      waText += `<p>${jam}.00 WIB - ${item.cuaca} ${emoji}</p>`
+    });
+
+    waText += `<br><p> Prakiraan cuaca besok : <br></p>`;
 
     selectedTime.forEach((item) => {
       const emoji = weatherController.getWeatherEmoji(item.kodeCuaca);
-      console.log(emoji)
       const jam = item.jamCuaca.split(" ")[1].substring(0,2);
 
       waText += `<p>${jam}.00 WIB - ${item.cuaca} ${emoji}</p>`
@@ -112,8 +122,62 @@ const sendWeatherForecast = async(chatId:string, msgBody:string) => {
   }
 };
 
+const sendMorningCall= async(chatId:string) => {
+  try{
+    const {dateString, day, month, year, tomorrowDateString} = getTime();
+    const rows = await getDailyVariable(dateString, month, year);
+    const rows2 = await getDailyVariable(tomorrowDateString, month, year);
+    const morningCall = rows['Morning Call'] || null;
+    const morningCallTmrw = rows2['Morning Call'] || null;
 
-export {sendMorningSchedule, sendEveningSchedule, sendSchedule, sendWeatherForecast}
+    let waText = `<p>Petugas Doa/Morning Call hari ini : <br></p>`;
+    waText += `<p>    ${morningCall}</p>`
+
+    waText += `<br><p>Petugas Doa/Morning Call besok : <br></p>`;
+    waText += `<p>    ${morningCallTmrw}</p>`;
+
+    waText = await convertHtmlToWhatsApp(waText);
+
+    await client.sendMessage(chatId, waText);
+  }catch(err){
+    console.log(err);
+  }
+};
+
+const sendSeragam= async(chatId:string) => {
+  try{
+    const {dateString, day, month, year, tomorrowDateString} = getTime();
+    const rows = await getDailyVariable(dateString, month, year);
+    const rows2 = await getDailyVariable(tomorrowDateString, month, year);
+    const seragam = rows['Seragam'] || null;
+    const seragamTmrw = rows2['Seragam'] || null;
+
+    let waText = `<p>Seragam hari ini : <br></p>`;
+    waText += `<p>    ${seragam}</p>`
+
+    waText += `<br><p>Seragam besok : <br></p>`;
+    waText += `<p>    ${seragamTmrw}</p>`;
+
+    waText = await convertHtmlToWhatsApp(waText);
+
+    await client.sendMessage(chatId, waText);
+  }catch(err){
+    console.log(err);
+  }
+};
+
+const sendOption = async(chatId:string) => {
+  try{
+    const optionText =  `Hi sobat AMBO, silahkan pilih nomor informasi yang dibutuhkan:<br><br><p>1. Doa/Morning Call </p><p>2. Seragam </p><p>3. Cuaca </p>`;
+    const waText = await convertHtmlToWhatsApp(optionText);
+    await client.sendMessage(chatId, waText);
+  }catch(err){
+    console.log(err);
+  }
+};
+
+
+export {sendMorningSchedule, sendEveningSchedule, sendSchedule, sendWeatherForecast, sendOption, sendMorningCall, sendSeragam}
 
 
 // -------------------------------------------------------------------------------------------

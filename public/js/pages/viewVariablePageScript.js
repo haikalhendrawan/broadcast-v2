@@ -7,7 +7,7 @@ async function getVariableById(id, month, year){
 
 const currentURL = window.location.href;
 const currentMonth = new Date().getMonth();
-const currentYear = 0;
+const currentYear = new Date().getFullYear();
 const splitURL = currentURL.split('/');
 const variableId = splitURL[splitURL.length-1];
 let chooseMonth = localStorage.getItem('month') || currentMonth;

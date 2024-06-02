@@ -22,6 +22,8 @@ router.get("/qr", authViews, refresh, renderPage("qr.ejs"));
 
 router.get("/calendar", authViews, refresh, renderPage("calendar.ejs"));
 
+router.get("/period", authViews, refresh, renderPage("period.ejs"));
+
 router.get("/variable", authViews, refresh, renderPage("variable.ejs"));
 
 router.get("/view-variable", authViews, refresh, renderPage("viewVariable.ejs"));

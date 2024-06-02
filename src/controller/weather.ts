@@ -31,6 +31,22 @@ async function getTomorrow() {
   }
 }
 
+async function getToday() {
+  try{
+    const response = await axios.get(WEATHER_API);
+    const weather: WeatherData[] = response.data;
+    const {today, tomorrow} = getTime();
+    const todayString = format(today, "yyyy-MM-dd");
+
+
+    const todayWeather = weather.filter((item) => item.jamCuaca.substring(0,10) === todayString);
+
+    return  todayWeather
+  }catch(err){
+    throw err;
+  }
+}
+
 function getWeatherEmoji(kodeCuaca: number | string) {
   switch (kodeCuaca) {
     case "0":
@@ -65,4 +81,4 @@ function getWeatherEmoji(kodeCuaca: number | string) {
   }
 }
 
-export {getTomorrow, getWeatherEmoji}
+export {getTomorrow, getWeatherEmoji, getToday}

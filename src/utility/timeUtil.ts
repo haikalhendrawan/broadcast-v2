@@ -18,7 +18,7 @@ export function getTime():time{
   const dateString: string = date.toString();
   const day: number = today.getDay();
   const month: number = today.getMonth();
-  const year: number = 0;
+  const year: number = today.getFullYear();
   const tomorrowDate: number = new Date().getDate()+1;
   const tomorrow = addDays(today, 1);
   const tomorrowDateString: string = tomorrowDate.toString();

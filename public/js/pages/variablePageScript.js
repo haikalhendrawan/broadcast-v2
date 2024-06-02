@@ -18,7 +18,7 @@ async function renderContent(){
   const currentMonth = new Date().getMonth();
   const currentDate = new Date().getDate();
   const tomorrowDate = new Date().getDate()+1;
-  const currentYear = 0;
+  const currentYear = new Date().getFullYear();
 
   for (const [index, item] of variables.entries()) {
     const variableId = item.id;
@@ -28,11 +28,12 @@ async function renderContent(){
     row.setAttribute('id', `row${variableId}`);
     row.innerHTML =`
       <td>${index+1}</td>
-      <td>${variableData.variable_name}</td>
-      <td>${variableData[currentDate]}</td>
-      <td>${variableData[tomorrowDate]}</td>
+      <td>${item.variable_name}</td>
+      <td>${item.period}</td>
+      <td>${variableData?.[currentDate] || null}</td>
+      <td>${variableData?.[tomorrowDate] || null}</td>
       <td>
-        <span> <a class='button btn-sm btn-success' href='variable/view-variable/${variableId}'><i class='fas fa-eye'></i></a></span>
+        <span> <a class='button btn-sm btn-success' href='variable/view-variable/${item.id}'><i class='fas fa-eye'></i></a></span>
         <span> <a class='button btn-sm btn-danger' onClick='deleteVariable(${item.id})'><i class='fas fa-trash'></i></a></span>
       </td>
       ` 
@@ -53,7 +54,7 @@ async function addVariable(){
   try{
     document.getElementById("addVariableButton").classList.add("d-none")
     const value = document.getElementById("addVariableInput").value;
-    const year = 0;
+    const year = document.getElementById("yearVariableInput").value;
     const data = {
       varName:value,
       year:year
@@ -67,6 +68,7 @@ async function addVariable(){
       body:JSON.stringify(data)
     });
     document.getElementById("addVariableInput").value = "";
+    document.getElementById("yearVariableInput").value = "";
     await $('#addVariableModal').modal('hide');
     location.reload();
   }catch(err){

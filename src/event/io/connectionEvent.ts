@@ -1,5 +1,6 @@
 import client from "../../config/client";
 import QRCode from "qrcode";
+import { sendWeatherForecast, sendOption, sendMorningCall, sendSeragam } from "../../controller/message";
 
  const connectEvent = (socket:any) => {
   socket.emit('message', 'Connecting...');
@@ -27,9 +28,19 @@ import QRCode from "qrcode";
     socket.emit('message', 'Auth failure, restarting...');
   });
 
-  client.on('message', (message) => {
-    console.log(message.body)
+  client.on('message', message => {
+    if (message.body === '1') {
+      return sendMorningCall(message.from);
+    }
+    if (message.body === '2') {
+      return sendSeragam(message.from);
+    }
+    if (message.body === '3') {
+      return sendWeatherForecast(message.from);
+    }
+    return sendOption(message.from);
   });
+
 
   client.on('disconnected', (reason) => {
     socket.emit('message', 'Whatsapp is disconnected!');
